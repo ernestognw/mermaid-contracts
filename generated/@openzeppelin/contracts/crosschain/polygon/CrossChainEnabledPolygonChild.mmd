@@ -1,0 +1,37 @@
+classDiagram
+  %% 987:1588:2
+  class CrossChainEnabledPolygonChild {
+    <<Contract>>
+    ~constructor(address fxChild)
+    ~_isCrossChain(): (bool)
+    ~_crossChainSender(): (address)
+    #processMessageFromRoot(uint256, address rootMessageSender, bytes calldata data)
+  }
+  
+  CrossChainEnabledPolygonChild --|> IFxMessageProcessor
+  
+  %% 146:174:5
+  class IFxMessageProcessor {
+    <<Interface>>
+    #processMessageFromRoot(uint256 stateId, address rootMessageSender, bytes calldata data)$
+  }
+  
+  CrossChainEnabledPolygonChild --|> CrossChainEnabled
+  
+  %% 662:1145:0
+  class CrossChainEnabled {
+    <<Contract>>
+    ~_isCrossChain(): (bool)$
+    ~_crossChainSender(): (address)$
+  }
+  
+  CrossChainEnabledPolygonChild --|> ReentrancyGuard
+  
+  %% 888:1952:3
+  class ReentrancyGuard {
+    <<Contract>>
+    ~constructor()
+    -_nonReentrantBefore()
+    -_nonReentrantAfter()
+  }
+  

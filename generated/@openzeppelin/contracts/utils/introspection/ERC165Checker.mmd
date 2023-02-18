@@ -1,0 +1,11 @@
+classDiagram
+  %% 449:4462:0
+  class ERC165Checker {
+    <<Library>>
+    ~supportsERC165(address account): (bool)
+    ~supportsInterface(address account, bytes4 interfaceId): (bool)
+    ~getSupportedInterfaces(address account, bytes4[] memory interfaceIds): (bool[] memory)
+    ~supportsAllInterfaces(address account, bytes4[] memory interfaceIds): (bool)
+    ~supportsERC165InterfaceUnchecked(address account, bytes4 interfaceId): (bool)
+  }
+  

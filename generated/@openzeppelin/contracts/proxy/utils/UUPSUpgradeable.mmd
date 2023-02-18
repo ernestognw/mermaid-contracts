@@ -1,0 +1,36 @@
+classDiagram
+  %% 876:3346:3
+  class UUPSUpgradeable {
+    <<Contract>>
+    #proxiableUUID(): (bytes32)
+    #upgradeTo(address newImplementation)
+    #upgradeToAndCall(address newImplementation, bytes memory data)
+    ~_authorizeUpgrade(address newImplementation)$
+  }
+  
+  UUPSUpgradeable --|> IERC1822Proxiable
+  
+  %% 342:536:0
+  class IERC1822Proxiable {
+    <<Interface>>
+    #proxiableUUID(): (bytes32)$
+  }
+  
+  UUPSUpgradeable --|> ERC1967Upgrade
+  
+  %% 529:5984:1
+  class ERC1967Upgrade {
+    <<Contract>>
+    ~_getImplementation(): (address)
+    -_setImplementation(address newImplementation)
+    ~_upgradeTo(address newImplementation)
+    ~_upgradeToAndCall(address newImplementation, bytes memory data, bool forceCall)
+    ~_upgradeToAndCallUUPS(address newImplementation, bytes memory data, bool forceCall)
+    ~_getAdmin(): (address)
+    -_setAdmin(address newAdmin)
+    ~_changeAdmin(address newAdmin)
+    ~_getBeacon(): (address)
+    -_setBeacon(address newBeacon)
+    ~_upgradeBeaconToAndCall(address newBeacon, bytes memory data, bool forceCall)
+  }
+  

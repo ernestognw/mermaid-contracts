@@ -1,0 +1,18 @@
+classDiagram
+  %% 786:729:1
+  class CrossChainEnabledArbitrumL1 {
+    <<Contract>>
+    ~constructor(address bridge)
+    ~_isCrossChain(): (bool)
+    ~_crossChainSender(): (address)
+  }
+  
+  CrossChainEnabledArbitrumL1 --|> CrossChainEnabled
+  
+  %% 662:1145:0
+  class CrossChainEnabled {
+    <<Contract>>
+    ~_isCrossChain(): (bool)$
+    ~_crossChainSender(): (address)$
+  }
+  

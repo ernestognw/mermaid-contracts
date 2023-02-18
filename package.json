@@ -4,6 +4,7 @@
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
+    "clean": "rm -rf generated",
     "generate": "ts-node src/scripts/generate"
   },
   "dependencies": {

@@ -1,0 +1,10 @@
+classDiagram
+  %% 244:3011:0
+  class Arrays {
+    <<Library>>
+    ~findUpperBound(uint256[] storage array, uint256 element): (uint256)
+    ~unsafeAccess(address[] storage arr, uint256 pos): (struct StorageSlot.AddressSlot storage)
+    ~unsafeAccess(bytes32[] storage arr, uint256 pos): (struct StorageSlot.Bytes32Slot storage)
+    ~unsafeAccess(uint256[] storage arr, uint256 pos): (struct StorageSlot.Uint256Slot storage)
+  }
+  

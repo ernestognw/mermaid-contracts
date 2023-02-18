@@ -1,0 +1,49 @@
+classDiagram
+  %% 451:522:1
+  class ERC1155Holder {
+    <<Contract>>
+    +onERC1155Received(address, address, uint256, uint256, bytes memory): (bytes4)
+    +onERC1155BatchReceived(address, address, uint256[] memory, uint256[] memory, bytes memory): (bytes4)
+  }
+  
+  ERC1155Holder --|> ERC1155Receiver
+  
+  %% 258:352:2
+  class ERC1155Receiver {
+    <<Contract>>
+    +supportsInterface(bytes4 interfaceId): (bool)
+  }
+  
+  ERC1155Receiver --|> ERC165
+  
+  %% 726:260:3
+  class ERC165 {
+    <<Contract>>
+    +supportsInterface(bytes4 interfaceId): (bool)
+  }
+  
+  ERC165 --|> IERC165
+  
+  %% 405:447:4
+  class IERC165 {
+    <<Interface>>
+    #supportsInterface(bytes4 interfaceId): (bool)$
+  }
+  
+  ERC1155Receiver --|> IERC1155Receiver
+  
+  %% 232:2269:0
+  class IERC1155Receiver {
+    <<Interface>>
+    #onERC1155Received(address operator, address from, uint256 id, uint256 value, bytes calldata data): (bytes4)$
+    #onERC1155BatchReceived(address operator, address from, uint256[] calldata ids, uint256[] calldata values, bytes calldata data): (bytes4)$
+  }
+  
+  IERC1155Receiver --|> IERC165
+  
+  %% 405:447:4
+  class IERC165 {
+    <<Interface>>
+    #supportsInterface(bytes4 interfaceId): (bool)$
+  }
+  

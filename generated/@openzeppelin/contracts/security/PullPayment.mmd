@@ -1,0 +1,10 @@
+classDiagram
+  %% 1156:1720:1
+  class PullPayment {
+    <<Contract>>
+    ~constructor()
+    +withdrawPayments(address payable payee)
+    +payments(address dest): (uint256)
+    ~_asyncTransfer(address dest, uint256 amount)
+  }
+  

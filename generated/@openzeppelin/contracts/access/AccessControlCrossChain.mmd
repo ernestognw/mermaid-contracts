@@ -1,0 +1,73 @@
+classDiagram
+  %% 1030:679:1
+  class AccessControlCrossChain {
+    <<Contract>>
+    ~_checkRole(bytes32 role)
+    ~_crossChainRoleAlias(bytes32 role): (bytes32)
+  }
+  
+  AccessControlCrossChain --|> AccessControl
+  
+  %% 1806:6295:0
+  class AccessControl {
+    <<Contract>>
+    +supportsInterface(bytes4 interfaceId): (bool)
+    +hasRole(bytes32 role, address account): (bool)
+    ~_checkRole(bytes32 role)
+    ~_checkRole(bytes32 role, address account)
+    +getRoleAdmin(bytes32 role): (bytes32)
+    +grantRole(bytes32 role, address account)
+    +revokeRole(bytes32 role, address account)
+    +renounceRole(bytes32 role, address account)
+    ~_setupRole(bytes32 role, address account)
+    ~_setRoleAdmin(bytes32 role, bytes32 adminRole)
+    ~_grantRole(bytes32 role, address account)
+    ~_revokeRole(bytes32 role, address account)
+  }
+  
+  AccessControl --|> Context
+  
+  %% 608:235:5
+  class Context {
+    <<Contract>>
+    ~_msgSender(): (address)
+    ~_msgData(): (bytes calldata)
+  }
+  
+  AccessControl --|> IAccessControl
+  
+  %% 209:2710:2
+  class IAccessControl {
+    <<Interface>>
+    #hasRole(bytes32 role, address account): (bool)$
+    #getRoleAdmin(bytes32 role): (bytes32)$
+    #grantRole(bytes32 role, address account)$
+    #revokeRole(bytes32 role, address account)$
+    #renounceRole(bytes32 role, address account)$
+  }
+  
+  AccessControl --|> ERC165
+  
+  %% 726:260:7
+  class ERC165 {
+    <<Contract>>
+    +supportsInterface(bytes4 interfaceId): (bool)
+  }
+  
+  ERC165 --|> IERC165
+  
+  %% 405:447:8
+  class IERC165 {
+    <<Interface>>
+    #supportsInterface(bytes4 interfaceId): (bool)$
+  }
+  
+  AccessControlCrossChain --|> CrossChainEnabled
+  
+  %% 662:1145:3
+  class CrossChainEnabled {
+    <<Contract>>
+    ~_isCrossChain(): (bool)$
+    ~_crossChainSender(): (address)$
+  }
+  

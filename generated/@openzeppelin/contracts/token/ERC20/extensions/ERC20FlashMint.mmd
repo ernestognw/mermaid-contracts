@@ -1,0 +1,92 @@
+classDiagram
+  %% 621:4160:4
+  class ERC20FlashMint {
+    <<Contract>>
+    +maxFlashLoan(address token): (uint256)
+    +flashFee(address token, uint256 amount): (uint256)
+    ~_flashFee(address token, uint256 amount): (uint256)
+    ~_flashFeeReceiver(): (address)
+    +flashLoan(contract IERC3156FlashBorrower receiver, address token, uint256 amount, bytes calldata data): (bool)
+  }
+  
+  ERC20FlashMint --|> ERC20
+  
+  %% 1401:11610:2
+  class ERC20 {
+    <<Contract>>
+    +constructor(string memory name_, string memory symbol_)
+    +name(): (string memory)
+    +symbol(): (string memory)
+    +decimals(): (uint8)
+    +totalSupply(): (uint256)
+    +balanceOf(address account): (uint256)
+    +transfer(address to, uint256 amount): (bool)
+    +allowance(address owner, address spender): (uint256)
+    +approve(address spender, uint256 amount): (bool)
+    +transferFrom(address from, address to, uint256 amount): (bool)
+    +increaseAllowance(address spender, uint256 addedValue): (bool)
+    +decreaseAllowance(address spender, uint256 subtractedValue): (bool)
+    ~_transfer(address from, address to, uint256 amount)
+    ~_mint(address account, uint256 amount)
+    ~_burn(address account, uint256 amount)
+    ~_approve(address owner, address spender, uint256 amount)
+    ~_spendAllowance(address owner, address spender, uint256 amount)
+    ~_beforeTokenTransfer(address from, address to, uint256 amount)
+    ~_afterTokenTransfer(address from, address to, uint256 amount)
+  }
+  
+  ERC20 --|> Context
+  
+  %% 608:235:6
+  class Context {
+    <<Contract>>
+    ~_msgSender(): (address)
+    ~_msgData(): (bytes calldata)
+  }
+  
+  ERC20 --|> IERC20
+  
+  %% 202:2564:3
+  class IERC20 {
+    <<Interface>>
+    #totalSupply(): (uint256)$
+    #balanceOf(address account): (uint256)$
+    #transfer(address to, uint256 amount): (bool)$
+    #allowance(address owner, address spender): (uint256)$
+    #approve(address spender, uint256 amount): (bool)$
+    #transferFrom(address from, address to, uint256 amount): (bool)$
+  }
+  
+  ERC20 --|> IERC20Metadata
+  
+  %% 277:405:5
+  class IERC20Metadata {
+    <<Interface>>
+    #name(): (string memory)$
+    #symbol(): (string memory)$
+    #decimals(): (uint8)$
+  }
+  
+  IERC20Metadata --|> IERC20
+  
+  %% 202:2564:3
+  class IERC20 {
+    <<Interface>>
+    #totalSupply(): (uint256)$
+    #balanceOf(address account): (uint256)$
+    #transfer(address to, uint256 amount): (bool)$
+    #allowance(address owner, address spender): (uint256)$
+    #approve(address spender, uint256 amount): (bool)$
+    #transferFrom(address from, address to, uint256 amount): (bool)$
+  }
+  
+  ERC20FlashMint --|> IERC3156FlashLender
+  
+  %% 319:1117:1
+  class IERC3156FlashLender {
+    <<Interface>>
+    #maxFlashLoan(address token): (uint256)$
+    #flashFee(address token, uint256 amount): (uint256)$
+    #flashLoan(contract IERC3156FlashBorrower receiver, address token, uint256 amount, bytes calldata data): (bool)$
+  }
+  

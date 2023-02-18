@@ -1,0 +1,41 @@
+classDiagram
+  %% 580:1515:3
+  class BeaconProxy {
+    <<Contract>>
+    +constructor(address beacon, bytes memory data)
+    ~_beacon(): (address)
+    ~_implementation(): (address)
+    ~_setBeacon(address beacon, bytes memory data)
+  }
+  
+  BeaconProxy --|> Proxy
+  
+  %% 723:2523:2
+  class Proxy {
+    <<Contract>>
+    ~_delegate(address implementation)
+    ~_implementation(): (address)$
+    ~_fallback()
+    #fallback()
+    #receive()
+    ~_beforeFallback()
+  }
+  
+  BeaconProxy --|> ERC1967Upgrade
+  
+  %% 529:5984:1
+  class ERC1967Upgrade {
+    <<Contract>>
+    ~_getImplementation(): (address)
+    -_setImplementation(address newImplementation)
+    ~_upgradeTo(address newImplementation)
+    ~_upgradeToAndCall(address newImplementation, bytes memory data, bool forceCall)
+    ~_upgradeToAndCallUUPS(address newImplementation, bytes memory data, bool forceCall)
+    ~_getAdmin(): (address)
+    -_setAdmin(address newAdmin)
+    ~_changeAdmin(address newAdmin)
+    ~_getBeacon(): (address)
+    -_setBeacon(address newBeacon)
+    ~_upgradeBeaconToAndCall(address newBeacon, bytes memory data, bool forceCall)
+  }
+  

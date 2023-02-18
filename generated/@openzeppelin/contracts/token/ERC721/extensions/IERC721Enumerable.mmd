@@ -1,0 +1,33 @@
+classDiagram
+  %% 317:706:1
+  class IERC721Enumerable {
+    <<Interface>>
+    #totalSupply(): (uint256)$
+    #tokenOfOwnerByIndex(address owner, uint256 index): (uint256)$
+    #tokenByIndex(uint256 index): (uint256)$
+  }
+  
+  IERC721Enumerable --|> IERC721
+  
+  %% 250:4725:0
+  class IERC721 {
+    <<Interface>>
+    #balanceOf(address owner): (uint256 balance)$
+    #ownerOf(uint256 tokenId): (address owner)$
+    #safeTransferFrom(address from, address to, uint256 tokenId, bytes calldata data)$
+    #safeTransferFrom(address from, address to, uint256 tokenId)$
+    #transferFrom(address from, address to, uint256 tokenId)$
+    #approve(address to, uint256 tokenId)$
+    #setApprovalForAll(address operator, bool _approved)$
+    #getApproved(uint256 tokenId): (address operator)$
+    #isApprovedForAll(address owner, address operator): (bool)$
+  }
+  
+  IERC721 --|> IERC165
+  
+  %% 405:447:2
+  class IERC165 {
+    <<Interface>>
+    #supportsInterface(bytes4 interfaceId): (bool)$
+  }
+  

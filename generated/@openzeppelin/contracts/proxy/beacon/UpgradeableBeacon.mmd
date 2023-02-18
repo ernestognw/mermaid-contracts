@@ -1,0 +1,40 @@
+classDiagram
+  %% 543:1496:2
+  class UpgradeableBeacon {
+    <<Contract>>
+    +constructor(address implementation_)
+    +implementation(): (address)
+    +upgradeTo(address newImplementation)
+    -_setImplementation(address newImplementation)
+  }
+  
+  UpgradeableBeacon --|> IBeacon
+  
+  %% 198:251:1
+  class IBeacon {
+    <<Interface>>
+    #implementation(): (address)$
+  }
+  
+  UpgradeableBeacon --|> Ownable
+  
+  %% 654:1968:0
+  class Ownable {
+    <<Contract>>
+    ~constructor()
+    +owner(): (address)
+    ~_checkOwner()
+    +renounceOwnership()
+    +transferOwnership(address newOwner)
+    ~_transferOwnership(address newOwner)
+  }
+  
+  Ownable --|> Context
+  
+  %% 608:235:4
+  class Context {
+    <<Contract>>
+    ~_msgSender(): (address)
+    ~_msgData(): (bytes calldata)
+  }
+  

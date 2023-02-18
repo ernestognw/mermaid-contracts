@@ -1,0 +1,54 @@
+classDiagram
+  %% 1649:3469:5
+  class TransparentUpgradeableProxy {
+    <<Contract>>
+    +constructor(address _logic, address admin_, bytes memory _data)
+    #admin(): (address admin_)
+    #implementation(): (address implementation_)
+    #changeAdmin(address newAdmin)
+    #upgradeTo(address newImplementation)
+    #upgradeToAndCall(address newImplementation, bytes calldata data)
+    ~_admin(): (address)
+    ~_beforeFallback()
+  }
+  
+  TransparentUpgradeableProxy --|> ERC1967Proxy
+  
+  %% 567:723:1
+  class ERC1967Proxy {
+    <<Contract>>
+    +constructor(address _logic, bytes memory _data)
+    ~_implementation(): (address impl)
+  }
+  
+  ERC1967Proxy --|> Proxy
+  
+  %% 723:2523:3
+  class Proxy {
+    <<Contract>>
+    ~_delegate(address implementation)
+    ~_implementation(): (address)$
+    ~_fallback()
+    #fallback()
+    #receive()
+    ~_beforeFallback()
+  }
+  
+  ERC1967Proxy --|> ERC1967Upgrade
+  
+  %% 529:5984:2
+  class ERC1967Upgrade {
+    <<Contract>>
+    ~_getImplementation(): (address)
+    -_setImplementation(address newImplementation)
+    ~_upgradeTo(address newImplementation)
+    ~_upgradeToAndCall(address newImplementation, bytes memory data, bool forceCall)
+    ~_upgradeToAndCallUUPS(address newImplementation, bytes memory data, bool forceCall)
+    ~_getAdmin(): (address)
+    -_setAdmin(address newAdmin)
+    ~_changeAdmin(address newAdmin)
+    ~_getBeacon(): (address)
+    -_setBeacon(address newBeacon)
+    ~_upgradeBeaconToAndCall(address newBeacon, bytes memory data, bool forceCall)
+  }
+  

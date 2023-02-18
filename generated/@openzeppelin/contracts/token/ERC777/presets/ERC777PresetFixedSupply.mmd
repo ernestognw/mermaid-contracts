@@ -1,0 +1,85 @@
+classDiagram
+  %% 353:452:5
+  class ERC777PresetFixedSupply {
+    <<Contract>>
+    +constructor(string memory name, string memory symbol, address[] memory defaultOperators, uint256 initialSupply, address owner)
+  }
+  
+  ERC777PresetFixedSupply --|> ERC777
+  
+  %% 1088:17574:1
+  class ERC777 {
+    <<Contract>>
+    +constructor(string memory name_, string memory symbol_, address[] memory defaultOperators_)
+    +name(): (string memory)
+    +symbol(): (string memory)
+    +decimals(): (uint8)
+    +granularity(): (uint256)
+    +totalSupply(): (uint256)
+    +balanceOf(address tokenHolder): (uint256)
+    +send(address recipient, uint256 amount, bytes memory data)
+    +transfer(address recipient, uint256 amount): (bool)
+    +burn(uint256 amount, bytes memory data)
+    +isOperatorFor(address operator, address tokenHolder): (bool)
+    +authorizeOperator(address operator)
+    +revokeOperator(address operator)
+    +defaultOperators(): (address[] memory)
+    +operatorSend(address sender, address recipient, uint256 amount, bytes memory data, bytes memory operatorData)
+    +operatorBurn(address account, uint256 amount, bytes memory data, bytes memory operatorData)
+    +allowance(address holder, address spender): (uint256)
+    +approve(address spender, uint256 value): (bool)
+    +transferFrom(address holder, address recipient, uint256 amount): (bool)
+    ~_mint(address account, uint256 amount, bytes memory userData, bytes memory operatorData)
+    ~_mint(address account, uint256 amount, bytes memory userData, bytes memory operatorData, bool requireReceptionAck)
+    ~_send(address from, address to, uint256 amount, bytes memory userData, bytes memory operatorData, bool requireReceptionAck)
+    ~_burn(address from, uint256 amount, bytes memory data, bytes memory operatorData)
+    -_move(address operator, address from, address to, uint256 amount, bytes memory userData, bytes memory operatorData)
+    ~_approve(address holder, address spender, uint256 value)
+    -_callTokensToSend(address operator, address from, address to, uint256 amount, bytes memory userData, bytes memory operatorData)
+    -_callTokensReceived(address operator, address from, address to, uint256 amount, bytes memory userData, bytes memory operatorData, bool requireReceptionAck)
+    ~_spendAllowance(address owner, address spender, uint256 amount)
+    ~_beforeTokenTransfer(address operator, address from, address to, uint256 amount)
+  }
+  
+  ERC777 --|> Context
+  
+  %% 608:235:7
+  class Context {
+    <<Contract>>
+    ~_msgSender(): (address)
+    ~_msgData(): (bytes calldata)
+  }
+  
+  ERC777 --|> IERC777
+  
+  %% 506:6291:2
+  class IERC777 {
+    <<Interface>>
+    #name(): (string memory)$
+    #symbol(): (string memory)$
+    #granularity(): (uint256)$
+    #totalSupply(): (uint256)$
+    #balanceOf(address owner): (uint256)$
+    #send(address recipient, uint256 amount, bytes calldata data)$
+    #burn(uint256 amount, bytes calldata data)$
+    #isOperatorFor(address operator, address tokenHolder): (bool)$
+    #authorizeOperator(address operator)$
+    #revokeOperator(address operator)$
+    #defaultOperators(): (address[] memory)$
+    #operatorSend(address sender, address recipient, uint256 amount, bytes calldata data, bytes calldata operatorData)$
+    #operatorBurn(address account, uint256 amount, bytes calldata data, bytes calldata operatorData)$
+  }
+  
+  ERC777 --|> IERC20
+  
+  %% 202:2564:0
+  class IERC20 {
+    <<Interface>>
+    #totalSupply(): (uint256)$
+    #balanceOf(address account): (uint256)$
+    #transfer(address to, uint256 amount): (bool)$
+    #allowance(address owner, address spender): (uint256)$
+    #approve(address spender, uint256 amount): (bool)$
+    #transferFrom(address from, address to, uint256 amount): (bool)$
+  }
+  

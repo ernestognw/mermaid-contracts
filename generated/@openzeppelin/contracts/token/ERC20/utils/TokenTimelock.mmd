@@ -1,0 +1,11 @@
+classDiagram
+  %% 393:1955:3
+  class TokenTimelock {
+    <<Contract>>
+    +constructor(contract IERC20 token_, address beneficiary_, uint256 releaseTime_)
+    +token(): (contract IERC20)
+    +beneficiary(): (address)
+    +releaseTime(): (uint256)
+    +release()
+  }
+  

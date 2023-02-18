@@ -1,0 +1,30 @@
+classDiagram
+  %% 1471:7100:0
+  class PaymentSplitter {
+    <<Contract>>
+    +constructor(address[] memory payees, uint256[] memory shares_)
+    #receive()
+    +totalShares(): (uint256)
+    +totalReleased(): (uint256)
+    +totalReleased(contract IERC20 token): (uint256)
+    +shares(address account): (uint256)
+    +released(address account): (uint256)
+    +released(contract IERC20 token, address account): (uint256)
+    +payee(uint256 index): (address)
+    +releasable(address account): (uint256)
+    +releasable(contract IERC20 token, address account): (uint256)
+    +release(address payable account)
+    +release(contract IERC20 token, address account)
+    -_pendingPayment(address account, uint256 totalReceived, uint256 alreadyReleased): (uint256)
+    -_addPayee(address account, uint256 shares_)
+  }
+  
+  PaymentSplitter --|> Context
+  
+  %% 608:235:5
+  class Context {
+    <<Contract>>
+    ~_msgSender(): (address)
+    ~_msgData(): (bytes calldata)
+  }
+  

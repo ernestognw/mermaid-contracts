@@ -1,10 +1,11 @@
 import { getOutput } from "../../utils";
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { basename, dirname, join, relative } from "path";
-import { astDereferencer, findAll } from "solidity-ast/utils";
+import { findAll } from "solidity-ast/utils";
 import { Class } from "solidity-mermaid";
 import { contractsAt } from "./contracts";
-import { SourceUnit } from "solidity-ast";
+import { ContractDefinition } from "solidity-ast";
+import { SolcOutput } from "solidity-ast/solc";
 
 function generate() {
   const root = join(__dirname, "../../..");
@@ -25,28 +26,37 @@ function generate() {
     for (const [, { ast }] of Object.entries(output.sources)) {
       // Loop every ContractDefinition
       for (const typeDef of findAll(["ContractDefinition"], ast)) {
-        const classDiagram = new Class(
-          {
-            sources: output.sources,
-          },
-          "ContractDefinition",
-          typeDef.id
-        );
-
-        const path = join(
-          root,
-          "generated",
-          relative(".", name).split("node_modules/")[1]
-        );
-        const directory = dirname(path);
-        if (!existsSync(path)) mkdirSync(directory, { recursive: true });
-
-        // Save diagram
-        writeFileSync(path, classDiagram.processed);
-        console.info(`${path} saved`);
+        const ozDirectory = relative(".", name).split("node_modules/")[1];
+        const outDirectory = join(root, "generated", dirname(ozDirectory));
+        const relevantContract = name.split("/").reverse().at(0);
+        if (relevantContract === `${typeDef.name}.sol`)
+          writeMermaid(output.sources, typeDef, outDirectory);
+        else console.info(`Skipping ${typeDef.name} from ${relevantContract}`);
       }
     }
   }
+}
+
+function writeMermaid(
+  sources: SolcOutput["sources"],
+  typeDef: ContractDefinition,
+  directory: string
+) {
+  const classDiagram = new Class(
+    {
+      sources,
+    },
+    "ContractDefinition",
+    typeDef.id
+  );
+
+  const path = join(directory, `${typeDef.name}.mmd`);
+  const directoryName = dirname(path);
+  if (!existsSync(path)) mkdirSync(directoryName, { recursive: true });
+
+  // Save diagram
+  writeFileSync(path, classDiagram.processed);
+  console.info(`Saved ${relative(".", path)}`);
 }
 
 generate();

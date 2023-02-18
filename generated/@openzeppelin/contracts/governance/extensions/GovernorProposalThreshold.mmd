@@ -1,0 +1,145 @@
+classDiagram
+  %% 336:343:2
+  class GovernorProposalThreshold {
+    <<Contract>>
+    +propose(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, string memory description): (uint256)
+  }
+  
+  GovernorProposalThreshold --|> Governor
+  
+  %% 998:19695:0
+  class Governor {
+    <<Contract>>
+    ~constructor(string memory name_)
+    #receive()
+    +supportsInterface(bytes4 interfaceId): (bool)
+    +name(): (string memory)
+    +version(): (string memory)
+    +hashProposal(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32 descriptionHash): (uint256)
+    +state(uint256 proposalId): (enum IGovernor.ProposalState)
+    +proposalSnapshot(uint256 proposalId): (uint256)
+    +proposalDeadline(uint256 proposalId): (uint256)
+    +proposalThreshold(): (uint256)
+    ~_quorumReached(uint256 proposalId): (bool)$
+    ~_voteSucceeded(uint256 proposalId): (bool)$
+    ~_getVotes(address account, uint256 blockNumber, bytes memory params): (uint256)$
+    ~_countVote(uint256 proposalId, address account, uint8 support, uint256 weight, bytes memory params)$
+    ~_defaultParams(): (bytes memory)
+    +propose(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, string memory description): (uint256)
+    +execute(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32 descriptionHash): (uint256)
+    ~_execute(uint256, address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32)
+    ~_beforeExecute(uint256, address[] memory targets, uint256[] memory, bytes[] memory calldatas, bytes32)
+    ~_afterExecute(uint256, address[] memory, uint256[] memory, bytes[] memory, bytes32)
+    ~_cancel(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32 descriptionHash): (uint256)
+    +getVotes(address account, uint256 blockNumber): (uint256)
+    +getVotesWithParams(address account, uint256 blockNumber, bytes memory params): (uint256)
+    +castVote(uint256 proposalId, uint8 support): (uint256)
+    +castVoteWithReason(uint256 proposalId, uint8 support, string calldata reason): (uint256)
+    +castVoteWithReasonAndParams(uint256 proposalId, uint8 support, string calldata reason, bytes memory params): (uint256)
+    +castVoteBySig(uint256 proposalId, uint8 support, uint8 v, bytes32 r, bytes32 s): (uint256)
+    +castVoteWithReasonAndParamsBySig(uint256 proposalId, uint8 support, string calldata reason, bytes memory params, uint8 v, bytes32 r, bytes32 s): (uint256)
+    ~_castVote(uint256 proposalId, address account, uint8 support, string memory reason): (uint256)
+    ~_castVote(uint256 proposalId, address account, uint8 support, string memory reason, bytes memory params): (uint256)
+    #relay(address target, uint256 value, bytes calldata data)
+    ~_executor(): (address)
+    +onERC721Received(address, address, uint256, bytes memory): (bytes4)
+    +onERC1155Received(address, address, uint256, uint256, bytes memory): (bytes4)
+    +onERC1155BatchReceived(address, address, uint256[] memory, uint256[] memory, bytes memory): (bytes4)
+  }
+  
+  Governor --|> Context
+  
+  %% 608:235:6
+  class Context {
+    <<Contract>>
+    ~_msgSender(): (address)
+    ~_msgData(): (bytes calldata)
+  }
+  
+  Governor --|> ERC165
+  
+  %% 726:260:11
+  class ERC165 {
+    <<Contract>>
+    +supportsInterface(bytes4 interfaceId): (bool)
+  }
+  
+  ERC165 --|> IERC165
+  
+  %% 405:447:12
+  class IERC165 {
+    <<Interface>>
+    #supportsInterface(bytes4 interfaceId): (bool)$
+  }
+  
+  Governor --|> EIP712
+  
+  %% 1304:3211:10
+  class EIP712 {
+    <<Contract>>
+    ~constructor(string memory name, string memory version)
+    ~_domainSeparatorV4(): (bytes32)
+    -_buildDomainSeparator(bytes32 typeHash, bytes32 nameHash, bytes32 versionHash): (bytes32)
+    ~_hashTypedDataV4(bytes32 structHash): (bytes32)
+  }
+  
+  Governor --|> IGovernor
+  
+  %% 258:9330:1
+  class IGovernor {
+    <<Contract>>
+    +name(): (string memory)$
+    +version(): (string memory)$
+    +COUNTING_MODE(): (string memory)$
+    +hashProposal(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32 descriptionHash): (uint256)$
+    +state(uint256 proposalId): (enum IGovernor.ProposalState)$
+    +proposalSnapshot(uint256 proposalId): (uint256)$
+    +proposalDeadline(uint256 proposalId): (uint256)$
+    +votingDelay(): (uint256)$
+    +votingPeriod(): (uint256)$
+    +quorum(uint256 blockNumber): (uint256)$
+    +getVotes(address account, uint256 blockNumber): (uint256)$
+    +getVotesWithParams(address account, uint256 blockNumber, bytes memory params): (uint256)$
+    +hasVoted(uint256 proposalId, address account): (bool)$
+    +propose(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, string memory description): (uint256 proposalId)$
+    +execute(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32 descriptionHash): (uint256 proposalId)$
+    +castVote(uint256 proposalId, uint8 support): (uint256 balance)$
+    +castVoteWithReason(uint256 proposalId, uint8 support, string calldata reason): (uint256 balance)$
+    +castVoteWithReasonAndParams(uint256 proposalId, uint8 support, string calldata reason, bytes memory params): (uint256 balance)$
+    +castVoteBySig(uint256 proposalId, uint8 support, uint8 v, bytes32 r, bytes32 s): (uint256 balance)$
+    +castVoteWithReasonAndParamsBySig(uint256 proposalId, uint8 support, string calldata reason, bytes memory params, uint8 v, bytes32 r, bytes32 s): (uint256 balance)$
+  }
+  
+  IGovernor --|> IERC165
+  
+  %% 405:447:12
+  class IERC165 {
+    <<Interface>>
+    #supportsInterface(bytes4 interfaceId): (bool)$
+  }
+  
+  Governor --|> IERC721Receiver
+  
+  %% 294:692:4
+  class IERC721Receiver {
+    <<Interface>>
+    #onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data): (bytes4)$
+  }
+  
+  Governor --|> IERC1155Receiver
+  
+  %% 232:2269:3
+  class IERC1155Receiver {
+    <<Interface>>
+    #onERC1155Received(address operator, address from, uint256 id, uint256 value, bytes calldata data): (bytes4)$
+    #onERC1155BatchReceived(address operator, address from, uint256[] calldata ids, uint256[] calldata values, bytes calldata data): (bytes4)$
+  }
+  
+  IERC1155Receiver --|> IERC165
+  
+  %% 405:447:12
+  class IERC165 {
+    <<Interface>>
+    #supportsInterface(bytes4 interfaceId): (bool)$
+  }
+  

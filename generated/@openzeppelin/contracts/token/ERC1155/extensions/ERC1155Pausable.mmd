@@ -1,0 +1,133 @@
+classDiagram
+  %% 507:585:4
+  class ERC1155Pausable {
+    <<Contract>>
+    ~_beforeTokenTransfer(address operator, address from, address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
+  }
+  
+  ERC1155Pausable --|> ERC1155
+  
+  %% 570:16689:1
+  class ERC1155 {
+    <<Contract>>
+    +constructor(string memory uri_)
+    +supportsInterface(bytes4 interfaceId): (bool)
+    +uri(uint256): (string memory)
+    +balanceOf(address account, uint256 id): (uint256)
+    +balanceOfBatch(address[] memory accounts, uint256[] memory ids): (uint256[] memory)
+    +setApprovalForAll(address operator, bool approved)
+    +isApprovedForAll(address account, address operator): (bool)
+    +safeTransferFrom(address from, address to, uint256 id, uint256 amount, bytes memory data)
+    +safeBatchTransferFrom(address from, address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
+    ~_safeTransferFrom(address from, address to, uint256 id, uint256 amount, bytes memory data)
+    ~_safeBatchTransferFrom(address from, address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
+    ~_setURI(string memory newuri)
+    ~_mint(address to, uint256 id, uint256 amount, bytes memory data)
+    ~_mintBatch(address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
+    ~_burn(address from, uint256 id, uint256 amount)
+    ~_burnBatch(address from, uint256[] memory ids, uint256[] memory amounts)
+    ~_setApprovalForAll(address owner, address operator, bool approved)
+    ~_beforeTokenTransfer(address operator, address from, address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
+    ~_afterTokenTransfer(address operator, address from, address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
+    -_doSafeTransferAcceptanceCheck(address operator, address from, address to, uint256 id, uint256 amount, bytes memory data)
+    -_doSafeBatchTransferAcceptanceCheck(address operator, address from, address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
+    -_asSingletonArray(uint256 element): (uint256[] memory)
+  }
+  
+  ERC1155 --|> Context
+  
+  %% 608:235:7
+  class Context {
+    <<Contract>>
+    ~_msgSender(): (address)
+    ~_msgData(): (bytes calldata)
+  }
+  
+  ERC1155 --|> ERC165
+  
+  %% 726:260:8
+  class ERC165 {
+    <<Contract>>
+    +supportsInterface(bytes4 interfaceId): (bool)
+  }
+  
+  ERC165 --|> IERC165
+  
+  %% 405:447:9
+  class IERC165 {
+    <<Interface>>
+    #supportsInterface(bytes4 interfaceId): (bool)$
+  }
+  
+  ERC1155 --|> IERC1155
+  
+  %% 350:3723:2
+  class IERC1155 {
+    <<Interface>>
+    #balanceOf(address account, uint256 id): (uint256)$
+    #balanceOfBatch(address[] calldata accounts, uint256[] calldata ids): (uint256[] memory)$
+    #setApprovalForAll(address operator, bool approved)$
+    #isApprovedForAll(address account, address operator): (bool)$
+    #safeTransferFrom(address from, address to, uint256 id, uint256 amount, bytes calldata data)$
+    #safeBatchTransferFrom(address from, address to, uint256[] calldata ids, uint256[] calldata amounts, bytes calldata data)$
+  }
+  
+  IERC1155 --|> IERC165
+  
+  %% 405:447:9
+  class IERC165 {
+    <<Interface>>
+    #supportsInterface(bytes4 interfaceId): (bool)$
+  }
+  
+  ERC1155 --|> IERC1155MetadataURI
+  
+  %% 364:310:5
+  class IERC1155MetadataURI {
+    <<Interface>>
+    #uri(uint256 id): (string memory)$
+  }
+  
+  IERC1155MetadataURI --|> IERC1155
+  
+  %% 350:3723:2
+  class IERC1155 {
+    <<Interface>>
+    #balanceOf(address account, uint256 id): (uint256)$
+    #balanceOfBatch(address[] calldata accounts, uint256[] calldata ids): (uint256[] memory)$
+    #setApprovalForAll(address operator, bool approved)$
+    #isApprovedForAll(address account, address operator): (bool)$
+    #safeTransferFrom(address from, address to, uint256 id, uint256 amount, bytes calldata data)$
+    #safeBatchTransferFrom(address from, address to, uint256[] calldata ids, uint256[] calldata amounts, bytes calldata data)$
+  }
+  
+  IERC1155 --|> IERC165
+  
+  %% 405:447:9
+  class IERC165 {
+    <<Interface>>
+    #supportsInterface(bytes4 interfaceId): (bool)$
+  }
+  
+  ERC1155Pausable --|> Pausable
+  
+  %% 602:1950:0
+  class Pausable {
+    <<Contract>>
+    ~constructor()
+    +paused(): (bool)
+    ~_requireNotPaused()
+    ~_requirePaused()
+    ~_pause()
+    ~_unpause()
+  }
+  
+  Pausable --|> Context
+  
+  %% 608:235:7
+  class Context {
+    <<Contract>>
+    ~_msgSender(): (address)
+    ~_msgData(): (bytes calldata)
+  }
+  

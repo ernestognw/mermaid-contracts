@@ -1,0 +1,16 @@
+classDiagram
+  %% 482:993:0
+  class ERC1820Implementer {
+    <<Contract>>
+    +canImplementInterfaceForAddress(bytes32 interfaceHash, address account): (bytes32)
+    ~_registerInterfaceForAddress(bytes32 interfaceHash, address account)
+  }
+  
+  ERC1820Implementer --|> IERC1820Implementer
+  
+  %% 402:356:1
+  class IERC1820Implementer {
+    <<Interface>>
+    #canImplementInterfaceForAddress(bytes32 interfaceHash, address account): (bytes32)$
+  }
+  

@@ -1,0 +1,45 @@
+classDiagram
+  %% 1096:3000:1
+  class ERC2981 {
+    <<Contract>>
+    +supportsInterface(bytes4 interfaceId): (bool)
+    +royaltyInfo(uint256 _tokenId, uint256 _salePrice): (address, uint256)
+    ~_feeDenominator(): (uint96)
+    ~_setDefaultRoyalty(address receiver, uint96 feeNumerator)
+    ~_deleteDefaultRoyalty()
+    ~_setTokenRoyalty(uint256 tokenId, address receiver, uint96 feeNumerator)
+    ~_resetTokenRoyalty(uint256 tokenId)
+  }
+  
+  ERC2981 --|> IERC2981
+  
+  %% 468:419:0
+  class IERC2981 {
+    <<Interface>>
+    #royaltyInfo(uint256 tokenId, uint256 salePrice): (address receiver, uint256 royaltyAmount)$
+  }
+  
+  IERC2981 --|> IERC165
+  
+  %% 405:447:3
+  class IERC165 {
+    <<Interface>>
+    #supportsInterface(bytes4 interfaceId): (bool)$
+  }
+  
+  ERC2981 --|> ERC165
+  
+  %% 726:260:2
+  class ERC165 {
+    <<Contract>>
+    +supportsInterface(bytes4 interfaceId): (bool)
+  }
+  
+  ERC165 --|> IERC165
+  
+  %% 405:447:3
+  class IERC165 {
+    <<Interface>>
+    #supportsInterface(bytes4 interfaceId): (bool)$
+  }
+  

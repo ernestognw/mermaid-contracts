@@ -1,0 +1,32 @@
+classDiagram
+  %% 599:1343:1
+  class Ownable2Step {
+    <<Contract>>
+    +pendingOwner(): (address)
+    +transferOwnership(address newOwner)
+    ~_transferOwnership(address newOwner)
+    #acceptOwnership()
+  }
+  
+  Ownable2Step --|> Ownable
+  
+  %% 654:1968:0
+  class Ownable {
+    <<Contract>>
+    ~constructor()
+    +owner(): (address)
+    ~_checkOwner()
+    +renounceOwnership()
+    +transferOwnership(address newOwner)
+    ~_transferOwnership(address newOwner)
+  }
+  
+  Ownable --|> Context
+  
+  %% 608:235:2
+  class Context {
+    <<Contract>>
+    ~_msgSender(): (address)
+    ~_msgData(): (bytes calldata)
+  }
+  

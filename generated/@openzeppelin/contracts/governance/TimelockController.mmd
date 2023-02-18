@@ -1,0 +1,111 @@
+classDiagram
+  %% 1030:13261:2
+  class TimelockController {
+    <<Contract>>
+    +constructor(uint256 minDelay, address[] memory proposers, address[] memory executors, address admin)
+    #receive()
+    +supportsInterface(bytes4 interfaceId): (bool)
+    +isOperation(bytes32 id): (bool registered)
+    +isOperationPending(bytes32 id): (bool pending)
+    +isOperationReady(bytes32 id): (bool ready)
+    +isOperationDone(bytes32 id): (bool done)
+    +getTimestamp(bytes32 id): (uint256 timestamp)
+    +getMinDelay(): (uint256 duration)
+    +hashOperation(address target, uint256 value, bytes calldata data, bytes32 predecessor, bytes32 salt): (bytes32 hash)
+    +hashOperationBatch(address[] calldata targets, uint256[] calldata values, bytes[] calldata payloads, bytes32 predecessor, bytes32 salt): (bytes32 hash)
+    +schedule(address target, uint256 value, bytes calldata data, bytes32 predecessor, bytes32 salt, uint256 delay)
+    +scheduleBatch(address[] calldata targets, uint256[] calldata values, bytes[] calldata payloads, bytes32 predecessor, bytes32 salt, uint256 delay)
+    -_schedule(bytes32 id, uint256 delay)
+    +cancel(bytes32 id)
+    +execute(address target, uint256 value, bytes calldata payload, bytes32 predecessor, bytes32 salt)
+    +executeBatch(address[] calldata targets, uint256[] calldata values, bytes[] calldata payloads, bytes32 predecessor, bytes32 salt)
+    ~_execute(address target, uint256 value, bytes calldata data)
+    -_beforeCall(bytes32 id, bytes32 predecessor)
+    -_afterCall(bytes32 id)
+    #updateDelay(uint256 newDelay)
+    +onERC721Received(address, address, uint256, bytes memory): (bytes4)
+    +onERC1155Received(address, address, uint256, uint256, bytes memory): (bytes4)
+    +onERC1155BatchReceived(address, address, uint256[] memory, uint256[] memory, bytes memory): (bytes4)
+  }
+  
+  TimelockController --|> AccessControl
+  
+  %% 1806:6295:0
+  class AccessControl {
+    <<Contract>>
+    +supportsInterface(bytes4 interfaceId): (bool)
+    +hasRole(bytes32 role, address account): (bool)
+    ~_checkRole(bytes32 role)
+    ~_checkRole(bytes32 role, address account)
+    +getRoleAdmin(bytes32 role): (bytes32)
+    +grantRole(bytes32 role, address account)
+    +revokeRole(bytes32 role, address account)
+    +renounceRole(bytes32 role, address account)
+    ~_setupRole(bytes32 role, address account)
+    ~_setRoleAdmin(bytes32 role, bytes32 adminRole)
+    ~_grantRole(bytes32 role, address account)
+    ~_revokeRole(bytes32 role, address account)
+  }
+  
+  AccessControl --|> Context
+  
+  %% 608:235:6
+  class Context {
+    <<Contract>>
+    ~_msgSender(): (address)
+    ~_msgData(): (bytes calldata)
+  }
+  
+  AccessControl --|> IAccessControl
+  
+  %% 209:2710:1
+  class IAccessControl {
+    <<Interface>>
+    #hasRole(bytes32 role, address account): (bool)$
+    #getRoleAdmin(bytes32 role): (bytes32)$
+    #grantRole(bytes32 role, address account)$
+    #revokeRole(bytes32 role, address account)$
+    #renounceRole(bytes32 role, address account)$
+  }
+  
+  AccessControl --|> ERC165
+  
+  %% 726:260:8
+  class ERC165 {
+    <<Contract>>
+    +supportsInterface(bytes4 interfaceId): (bool)
+  }
+  
+  ERC165 --|> IERC165
+  
+  %% 405:447:9
+  class IERC165 {
+    <<Interface>>
+    #supportsInterface(bytes4 interfaceId): (bool)$
+  }
+  
+  TimelockController --|> IERC721Receiver
+  
+  %% 294:692:4
+  class IERC721Receiver {
+    <<Interface>>
+    #onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data): (bytes4)$
+  }
+  
+  TimelockController --|> IERC1155Receiver
+  
+  %% 232:2269:3
+  class IERC1155Receiver {
+    <<Interface>>
+    #onERC1155Received(address operator, address from, uint256 id, uint256 value, bytes calldata data): (bytes4)$
+    #onERC1155BatchReceived(address operator, address from, uint256[] calldata ids, uint256[] calldata values, bytes calldata data): (bytes4)$
+  }
+  
+  IERC1155Receiver --|> IERC165
+  
+  %% 405:447:9
+  class IERC165 {
+    <<Interface>>
+    #supportsInterface(bytes4 interfaceId): (bool)$
+  }
+  
