@@ -59,7 +59,7 @@ function createIndex(): UnorderedList {
         if (isString(next)) throw new Error("Failed processing README"); // Should be unreachable
         current = next;
       } else {
-        current.ul.push(`(${dir})[${join("./generated", path)}]`);
+        current.ul.push(`[${dir}](${join("./generated", path)})`);
       }
     }
   }
