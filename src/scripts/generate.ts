@@ -1,19 +1,19 @@
-import { getOutput } from "../utils/solc";
-import { existsSync, mkdirSync, writeFileSync } from "fs";
-import { dirname, extname, join, relative } from "path";
-import { findAll } from "solidity-ast/utils";
-import { Class } from "solidity-mermaid";
-import { ContractDefinition } from "solidity-ast";
-import { SolcOutput } from "solidity-ast/solc";
-import { filesAt } from "../utils/files";
+import { getOutput } from '../utils/solc';
+import { existsSync, mkdirSync, writeFileSync } from 'fs';
+import { dirname, extname, join, relative } from 'path';
+import { findAll } from 'solidity-ast/utils';
+import { Class } from 'solidity-mermaid';
+import { ContractDefinition } from 'solidity-ast';
+import { SolcOutput } from 'solidity-ast/solc';
+import { filesAt } from '../utils/files';
 
 function generate() {
-  const root = join(__dirname, "../..");
-  const modulesPath = join(root, "node_modules");
-  const ozPath = join(modulesPath, "@openzeppelin/contracts");
+  const root = join(__dirname, '../..');
+  const modulesPath = join(root, 'node_modules');
+  const ozPath = join(modulesPath, '@openzeppelin/contracts');
 
   const contracts = [
-    ...filesAt(ozPath, { filter: ({ name }) => extname(name) === ".sol" }),
+    ...filesAt(ozPath, { filter: ({ name }) => extname(name) === '.sol' }),
   ];
 
   const sources = contracts.reduce(
@@ -28,10 +28,10 @@ function generate() {
     // Loop every source generated
     for (const [, { ast }] of Object.entries(output.sources)) {
       // Loop every ContractDefinition
-      for (const typeDef of findAll(["ContractDefinition"], ast)) {
-        const ozDirectory = relative(".", name).split("node_modules/")[1];
-        const outDirectory = join(root, "generated", dirname(ozDirectory));
-        const relevantContract = name.split("/").reverse().at(0);
+      for (const typeDef of findAll(['ContractDefinition'], ast)) {
+        const ozDirectory = relative('.', name).split('node_modules/')[1];
+        const outDirectory = join(root, 'generated', dirname(ozDirectory));
+        const relevantContract = name.split('/').reverse().at(0);
         if (relevantContract === `${typeDef.name}.sol`)
           writeMermaid(output.sources, typeDef, outDirectory);
         else console.info(`Skipping ${typeDef.name} from ${relevantContract}`);
@@ -41,7 +41,7 @@ function generate() {
 }
 
 function writeMermaid(
-  sources: SolcOutput["sources"],
+  sources: SolcOutput['sources'],
   typeDef: ContractDefinition,
   directory: string
 ) {
@@ -49,7 +49,7 @@ function writeMermaid(
     {
       sources,
     },
-    "ContractDefinition",
+    'ContractDefinition',
     typeDef.id
   );
 
@@ -59,7 +59,7 @@ function writeMermaid(
 
   // Save diagram
   writeFileSync(path, classDiagram.processed);
-  console.info(`Saved ${relative(".", path)}`);
+  console.info(`Saved ${relative('.', path)}`);
 }
 
 generate();

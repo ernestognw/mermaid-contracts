@@ -1,22 +1,22 @@
-import { filesAt } from "../utils/files";
-import { extname, join, relative } from "path";
-import json2md from "json2md";
-import { writeFileSync } from "fs";
+import { filesAt } from '../utils/files';
+import { extname, join, relative } from 'path';
+import json2md from 'json2md';
+import { writeFileSync } from 'fs';
 
-const root = join(__dirname, "../..");
+const root = join(__dirname, '../..');
 
 function createReadme() {
   writeFileSync(
-    join(root, "README.md"),
+    join(root, 'README.md'),
     json2md([
       {
-        h1: "Solidity Contracts Mermaid Diagrams",
+        h1: 'Solidity Contracts Mermaid Diagrams',
       },
       {
-        p: "A collection of common Solidity Contracts diagrams",
+        p: 'A collection of common Solidity Contracts diagrams',
       },
       {
-        h2: "Index",
+        h2: 'Index',
       },
       createIndex(),
     ])
@@ -28,10 +28,10 @@ interface UnorderedList {
 }
 
 const isString = (candidate): candidate is string =>
-  typeof candidate === "string";
+  typeof candidate === 'string';
 
 function createIndex(): UnorderedList {
-  const generated = join(root, "generated");
+  const generated = join(root, 'generated');
 
   const tree: UnorderedList = {
     ul: [],
@@ -41,7 +41,7 @@ function createIndex(): UnorderedList {
   for (const diagram of filesAt(generated)) {
     const path = relative(generated, diagram.name);
     let current = tree;
-    for (const dir of path.split("/")) {
+    for (const dir of path.split('/')) {
       if (!extname(dir)) {
         // Push directory if doesn't exist
         if (!current.ul.includes(dir)) {
@@ -56,10 +56,10 @@ function createIndex(): UnorderedList {
           (ul) => isString(ul) && ul == dir
         );
         const next = current.ul[dirIndex + 1];
-        if (isString(next)) throw new Error("Failed processing README"); // Should be unreachable
+        if (isString(next)) throw new Error('Failed processing README'); // Should be unreachable
         current = next;
       } else {
-        current.ul.push(`[${dir}](${join("./generated", path)})`);
+        current.ul.push(`[${dir}](${join('./generated', path)})`);
       }
     }
   }

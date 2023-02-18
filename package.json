@@ -4,13 +4,21 @@
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
+    "build": "yarn generate && yarn readme",
     "clean": "rm -rf generated",
-    "generate": "ts-node src/scripts/generate",
-    "readme": "ts-node src/scripts/readme"
+    "generate": "yarn clean && ts-node src/scripts/generate",
+    "readme": "ts-node src/scripts/readme && yarn format",
+    "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
+    "lint:fix": "yarn lint --fix",
+    "format": "yarn lint:fix && prettier --write ."
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.8.1",
+    "@typescript-eslint/eslint-plugin": "^5.52.0",
+    "@typescript-eslint/parser": "^5.52.0",
+    "eslint": "^8.34.0",
     "json2md": "^2.0.0",
+    "prettier": "^2.8.4",
     "solc": "^0.8.18",
     "solidity-ast": "^0.4.43",
     "solidity-mermaid": "^0.1.1",
