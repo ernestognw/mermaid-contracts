@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "allowJs": true,
+    "noImplicitAny": false,
+    "rootDir": "./",
+    "baseUrl": "./",
+    "paths": {
+      "@*": ["./src/*"]
+    }
+  }
+}
