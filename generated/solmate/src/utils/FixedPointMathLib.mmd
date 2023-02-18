@@ -1,0 +1,17 @@
+classDiagram
+  %% 341:9712:0
+  class FixedPointMathLib {
+    <<Library>>
+    ~mulWadDown(uint256 x, uint256 y): (uint256)
+    ~mulWadUp(uint256 x, uint256 y): (uint256)
+    ~divWadDown(uint256 x, uint256 y): (uint256)
+    ~divWadUp(uint256 x, uint256 y): (uint256)
+    ~mulDivDown(uint256 x, uint256 y, uint256 denominator): (uint256 z)
+    ~mulDivUp(uint256 x, uint256 y, uint256 denominator): (uint256 z)
+    ~rpow(uint256 x, uint256 n, uint256 scalar): (uint256 z)
+    ~sqrt(uint256 x): (uint256 z)
+    ~unsafeMod(uint256 x, uint256 y): (uint256 z)
+    ~unsafeDiv(uint256 x, uint256 y): (uint256 r)
+    ~unsafeDivUp(uint256 x, uint256 y): (uint256 z)
+  }
+  

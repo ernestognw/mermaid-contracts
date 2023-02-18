@@ -219,3 +219,28 @@ A collection of common Solidity Contracts diagrams
         - [ICrossDomainMessenger.mmd](generated/@openzeppelin/contracts/vendor/optimism/ICrossDomainMessenger.mmd)
       - polygon
         - [IFxMessageProcessor.mmd](generated/@openzeppelin/contracts/vendor/polygon/IFxMessageProcessor.mmd)
+- solmate
+  - src
+    - auth
+      - [Auth.mmd](generated/solmate/src/auth/Auth.mmd)
+      - [Owned.mmd](generated/solmate/src/auth/Owned.mmd)
+      - authorities
+        - [MultiRolesAuthority.mmd](generated/solmate/src/auth/authorities/MultiRolesAuthority.mmd)
+        - [RolesAuthority.mmd](generated/solmate/src/auth/authorities/RolesAuthority.mmd)
+    - mixins
+      - [ERC4626.mmd](generated/solmate/src/mixins/ERC4626.mmd)
+    - tokens
+      - [ERC1155.mmd](generated/solmate/src/tokens/ERC1155.mmd)
+      - [ERC20.mmd](generated/solmate/src/tokens/ERC20.mmd)
+      - [ERC721.mmd](generated/solmate/src/tokens/ERC721.mmd)
+      - [WETH.mmd](generated/solmate/src/tokens/WETH.mmd)
+    - utils
+      - [Bytes32AddressLib.mmd](generated/solmate/src/utils/Bytes32AddressLib.mmd)
+      - [CREATE3.mmd](generated/solmate/src/utils/CREATE3.mmd)
+      - [FixedPointMathLib.mmd](generated/solmate/src/utils/FixedPointMathLib.mmd)
+      - [LibString.mmd](generated/solmate/src/utils/LibString.mmd)
+      - [MerkleProofLib.mmd](generated/solmate/src/utils/MerkleProofLib.mmd)
+      - [ReentrancyGuard.mmd](generated/solmate/src/utils/ReentrancyGuard.mmd)
+      - [SSTORE2.mmd](generated/solmate/src/utils/SSTORE2.mmd)
+      - [SafeCastLib.mmd](generated/solmate/src/utils/SafeCastLib.mmd)
+      - [SafeTransferLib.mmd](generated/solmate/src/utils/SafeTransferLib.mmd)

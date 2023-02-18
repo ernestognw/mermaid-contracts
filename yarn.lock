@@ -959,6 +959,11 @@ solidity-mermaid@^0.1.1:
   dependencies:
     solidity-ast "^0.4.43"
 
+solmate@^6.7.0:
+  version "6.7.0"
+  resolved "https://registry.yarnpkg.com/solmate/-/solmate-6.7.0.tgz#5e07b62498babec273aceb322a3e45d0e058e042"
+  integrity sha512-iMPr+gKbKjXBB12a+Iz5Tua5r7T4yugHaGXDWSJbBZB4Gr3vLeUUvKeLyMxCWWqk1xlLhFDFFuAmOzeyVBuyvQ==
+
 strip-ansi@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"

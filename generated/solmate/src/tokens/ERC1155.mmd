@@ -1,0 +1,16 @@
+classDiagram
+  %% 240:7224:0
+  class ERC1155 {
+    <<Contract>>
+    +uri(uint256 id): (string memory)$
+    +setApprovalForAll(address operator, bool approved)
+    +safeTransferFrom(address from, address to, uint256 id, uint256 amount, bytes calldata data)
+    +safeBatchTransferFrom(address from, address to, uint256[] calldata ids, uint256[] calldata amounts, bytes calldata data)
+    +balanceOfBatch(address[] calldata owners, uint256[] calldata ids): (uint256[] memory balances)
+    +supportsInterface(bytes4 interfaceId): (bool)
+    ~_mint(address to, uint256 id, uint256 amount, bytes memory data)
+    ~_batchMint(address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
+    ~_batchBurn(address from, uint256[] memory ids, uint256[] memory amounts)
+    ~_burn(address from, uint256 id, uint256 amount)
+  }
+  

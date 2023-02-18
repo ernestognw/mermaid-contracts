@@ -1,0 +1,10 @@
+classDiagram
+  %% 369:1760:0
+  class Auth {
+    <<Contract>>
+    ~constructor(address _owner, contract Authority _authority)
+    ~isAuthorized(address user, bytes4 functionSig): (bool)
+    +setAuthority(contract Authority newAuthority)
+    +transferOwnership(address newOwner)
+  }
+  

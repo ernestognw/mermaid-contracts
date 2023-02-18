@@ -1,0 +1,11 @@
+classDiagram
+  %% 352:5104:0
+  class SSTORE2 {
+    <<Library>>
+    ~write(bytes memory data): (address pointer)
+    ~read(address pointer): (bytes memory)
+    ~read(address pointer, uint256 start): (bytes memory)
+    ~read(address pointer, uint256 start, uint256 end): (bytes memory)
+    -readBytecode(address pointer, uint256 start, uint256 size): (bytes memory data)
+  }
+  

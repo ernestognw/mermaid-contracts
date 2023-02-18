@@ -1,0 +1,8 @@
+classDiagram
+  %% 410:3768:1
+  class CREATE3 {
+    <<Library>>
+    ~deploy(bytes32 salt, bytes memory creationCode, uint256 value): (address deployed)
+    ~getDeployed(bytes32 salt): (address)
+  }
+  

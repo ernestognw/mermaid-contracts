@@ -1,0 +1,20 @@
+classDiagram
+  %% 239:6685:0
+  class ERC721 {
+    <<Contract>>
+    +tokenURI(uint256 id): (string memory)$
+    +ownerOf(uint256 id): (address owner)
+    +balanceOf(address owner): (uint256)
+    ~constructor(string memory _name, string memory _symbol)
+    +approve(address spender, uint256 id)
+    +setApprovalForAll(address operator, bool approved)
+    +transferFrom(address from, address to, uint256 id)
+    +safeTransferFrom(address from, address to, uint256 id)
+    +safeTransferFrom(address from, address to, uint256 id, bytes calldata data)
+    +supportsInterface(bytes4 interfaceId): (bool)
+    ~_mint(address to, uint256 id)
+    ~_burn(uint256 id)
+    ~_safeMint(address to, uint256 id)
+    ~_safeMint(address to, uint256 id, bytes memory data)
+  }
+  

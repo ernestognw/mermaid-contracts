@@ -11,10 +11,17 @@ function generate() {
   const root = join(__dirname, '../..');
   const modulesPath = join(root, 'node_modules');
   const ozPath = join(modulesPath, '@openzeppelin/contracts');
+  const solmate = join(modulesPath, 'solmate/src');
 
   const contracts = [
     ...filesAt(ozPath, { filter: ({ name }) => extname(name) === '.sol' }),
+    ...filesAt(solmate, {
+      filter: ({ name }) =>
+        extname(name) === '.sol' && !name.includes('/test/'),
+    }),
   ];
+
+  console.log(contracts);
 
   const sources = contracts.reduce(
     (acc, contract) => Object.assign(acc, { [contract.name]: contract }),

@@ -1,0 +1,33 @@
+classDiagram
+  %% 327:4461:1
+  class MultiRolesAuthority {
+    <<Contract>>
+    +constructor(address _owner, contract Authority _authority)
+    +doesUserHaveRole(address user, uint8 role): (bool)
+    +doesRoleHaveCapability(uint8 role, bytes4 functionSig): (bool)
+    +canCall(address user, address target, bytes4 functionSig): (bool)
+    +setTargetCustomAuthority(address target, contract Authority customAuthority)
+    +setPublicCapability(bytes4 functionSig, bool enabled)
+    +setUserRole(address user, uint8 role, bool enabled)
+    +setRoleCapability(uint8 role, bytes4 functionSig, bool enabled)
+  }
+  
+  MultiRolesAuthority --|> Auth
+  
+  %% 369:1760:0
+  class Auth {
+    <<Contract>>
+    ~constructor(address _owner, contract Authority _authority)
+    ~isAuthorized(address user, bytes4 functionSig): (bool)
+    +setAuthority(contract Authority newAuthority)
+    +transferOwnership(address newOwner)
+  }
+  
+  MultiRolesAuthority --|> Authority
+  
+  %% 2422:154:0
+  class Authority {
+    <<Interface>>
+    #canCall(address user, address target, bytes4 functionSig): (bool)$
+  }
+  

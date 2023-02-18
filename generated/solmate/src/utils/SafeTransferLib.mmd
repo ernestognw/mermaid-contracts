@@ -1,0 +1,10 @@
+classDiagram
+  %% 586:5368:1
+  class SafeTransferLib {
+    <<Library>>
+    ~safeTransferETH(address to, uint256 amount)
+    ~safeTransferFrom(contract ERC20 token, address from, address to, uint256 amount)
+    ~safeTransfer(contract ERC20 token, address to, uint256 amount)
+    ~safeApprove(contract ERC20 token, address to, uint256 amount)
+  }
+  
