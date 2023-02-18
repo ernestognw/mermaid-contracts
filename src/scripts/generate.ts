@@ -1,25 +1,28 @@
-import { getOutput } from "../../utils";
+import { getOutput } from "../utils/solc";
 import { existsSync, mkdirSync, writeFileSync } from "fs";
-import { basename, dirname, join, relative } from "path";
+import { dirname, extname, join, relative } from "path";
 import { findAll } from "solidity-ast/utils";
 import { Class } from "solidity-mermaid";
-import { contractsAt } from "./contracts";
 import { ContractDefinition } from "solidity-ast";
 import { SolcOutput } from "solidity-ast/solc";
+import { filesAt } from "../utils/files";
 
 function generate() {
-  const root = join(__dirname, "../../..");
+  const root = join(__dirname, "../..");
   const modulesPath = join(root, "node_modules");
   const ozPath = join(modulesPath, "@openzeppelin/contracts");
 
-  const contracts = contractsAt(ozPath);
-  const sources = [...contracts].reduce(
+  const contracts = [
+    ...filesAt(ozPath, { filter: ({ name }) => extname(name) === ".sol" }),
+  ];
+
+  const sources = contracts.reduce(
     (acc, contract) => Object.assign(acc, { [contract.name]: contract }),
     {}
   );
 
   // Loop every contract
-  for (const { name } of contractsAt(ozPath)) {
+  for (const { name } of contracts) {
     const output = getOutput(sources, name);
 
     // Loop every source generated

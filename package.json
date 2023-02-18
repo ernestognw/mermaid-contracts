@@ -5,10 +5,12 @@
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf generated",
-    "generate": "ts-node src/scripts/generate"
+    "generate": "ts-node src/scripts/generate",
+    "readme": "ts-node src/scripts/readme"
   },
   "dependencies": {
     "@openzeppelin/contracts": "4.8.1",
+    "json2md": "^2.0.0",
     "solc": "0.8.10",
     "solidity-ast": "^0.4.43",
     "solidity-mermaid": "^0.1.1",

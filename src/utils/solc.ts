@@ -1,12 +1,8 @@
-import { Contract } from "@types";
+import type { File } from "../types";
 import solc from "solc";
-import { SourceUnit } from "solidity-ast";
 import { SolcOutput } from "solidity-ast/solc";
 
-function getOutput(
-  contracts: Record<string, Contract>,
-  name: string
-): SolcOutput {
+function getOutput(contracts: Record<string, File>, name: string): SolcOutput {
   const input = {
     language: "Solidity",
     sources: {

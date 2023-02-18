@@ -148,6 +148,11 @@ graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.1.9:
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.10.tgz#147d3a006da4ca3ce14728c7aefc287c367d7a6c"
   integrity sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==
 
+indento@^1.1.13:
+  version "1.1.13"
+  resolved "https://registry.yarnpkg.com/indento/-/indento-1.1.13.tgz#751331b327c04740eeb7be40c5606e6e255c9e36"
+  integrity sha512-YZWk3mreBEM7sBPddsiQnW9Z8SGg/gNpFfscJq00HCDS7pxcQWWWMSVKJU7YkTRyDu1Zv2s8zaK8gQWKmCXHlg==
+
 inflight@^1.0.4:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/inflight/-/inflight-1.0.6.tgz#49bd6331d7d02d0c09bc910a1075ba8165b56df9"
@@ -165,6 +170,13 @@ js-sha3@0.8.0:
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/js-sha3/-/js-sha3-0.8.0.tgz#b9b7a5da73afad7dedd0f8c463954cbde6818840"
   integrity sha512-gF1cRrHhIzNfToc802P800N8PpXS+evLLXfsVpowqmAFR9uwbi89WvXg2QspOmXL8QL86J4T1EpFu+yUkwJY3Q==
+
+json2md@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/json2md/-/json2md-2.0.0.tgz#9ea4404183b836c39dfa886b4bbf25c8186694eb"
+  integrity sha512-4PIMtD0zTfQZWcUId1EyHY2BQ2EG/imHWHkGFbXYPlczW8G6wPJA/BRVN3e5v6NPwFUCcoFvUsCeo6rzV2CWww==
+  dependencies:
+    indento "^1.1.13"
 
 jsonfile@^2.1.0:
   version "2.4.0"

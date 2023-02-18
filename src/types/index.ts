@@ -1,4 +1,4 @@
-export interface Contract {
+export interface File {
   name: string;
   content: string;
 }
