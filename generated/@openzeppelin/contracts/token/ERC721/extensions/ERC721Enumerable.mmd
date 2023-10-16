@@ -1,24 +1,25 @@
 classDiagram
-  %% 412:6395:3
+  %% 708:6577:4
   class ERC721Enumerable {
     <<Contract>>
     +supportsInterface(bytes4 interfaceId): (bool)
     +tokenOfOwnerByIndex(address owner, uint256 index): (uint256)
     +totalSupply(): (uint256)
     +tokenByIndex(uint256 index): (uint256)
-    ~_beforeTokenTransfer(address from, address to, uint256 firstTokenId, uint256 batchSize)
+    ~_update(address to, uint256 tokenId, address auth): (address)
     -_addTokenToOwnerEnumeration(address to, uint256 tokenId)
     -_addTokenToAllTokensEnumeration(uint256 tokenId)
     -_removeTokenFromOwnerEnumeration(address from, uint256 tokenId)
     -_removeTokenFromAllTokensEnumeration(uint256 tokenId)
+    ~_increaseBalance(address account, uint128 amount)
   }
   
   ERC721Enumerable --|> ERC721
   
-  %% 628:16327:0
+  %% 776:16926:1
   class ERC721 {
     <<Contract>>
-    +constructor(string memory name_, string memory symbol_)
+    ~constructor(string memory name_, string memory symbol_)
     +supportsInterface(bytes4 interfaceId): (bool)
     +balanceOf(address owner): (uint256)
     +ownerOf(uint256 tokenId): (address)
@@ -33,26 +34,29 @@ classDiagram
     +transferFrom(address from, address to, uint256 tokenId)
     +safeTransferFrom(address from, address to, uint256 tokenId)
     +safeTransferFrom(address from, address to, uint256 tokenId, bytes memory data)
-    ~_safeTransfer(address from, address to, uint256 tokenId, bytes memory data)
     ~_ownerOf(uint256 tokenId): (address)
-    ~_exists(uint256 tokenId): (bool)
-    ~_isApprovedOrOwner(address spender, uint256 tokenId): (bool)
+    ~_getApproved(uint256 tokenId): (address)
+    ~_isAuthorized(address owner, address spender, uint256 tokenId): (bool)
+    ~_checkAuthorized(address owner, address spender, uint256 tokenId)
+    ~_increaseBalance(address account, uint128 value)
+    ~_update(address to, uint256 tokenId, address auth): (address)
+    ~_mint(address to, uint256 tokenId)
     ~_safeMint(address to, uint256 tokenId)
     ~_safeMint(address to, uint256 tokenId, bytes memory data)
-    ~_mint(address to, uint256 tokenId)
     ~_burn(uint256 tokenId)
     ~_transfer(address from, address to, uint256 tokenId)
-    ~_approve(address to, uint256 tokenId)
+    ~_safeTransfer(address from, address to, uint256 tokenId)
+    ~_safeTransfer(address from, address to, uint256 tokenId, bytes memory data)
+    ~_approve(address to, uint256 tokenId, address auth)
+    ~_approve(address to, uint256 tokenId, address auth, bool emitEvent)
     ~_setApprovalForAll(address owner, address operator, bool approved)
-    ~_requireMinted(uint256 tokenId)
-    -_checkOnERC721Received(address from, address to, uint256 tokenId, bytes memory data): (bool)
-    ~_beforeTokenTransfer(address from, address to, uint256, uint256 batchSize)
-    ~_afterTokenTransfer(address from, address to, uint256 firstTokenId, uint256 batchSize)
+    ~_requireOwned(uint256 tokenId): (address)
+    -_checkOnERC721Received(address from, address to, uint256 tokenId, bytes memory data)
   }
   
   ERC721 --|> Context
   
-  %% 608:235:7
+  %% 624:235:7
   class Context {
     <<Contract>>
     ~_msgSender(): (address)
@@ -61,7 +65,7 @@ classDiagram
   
   ERC721 --|> ERC165
   
-  %% 726:260:9
+  %% 659:251:9
   class ERC165 {
     <<Contract>>
     +supportsInterface(bytes4 interfaceId): (bool)
@@ -69,7 +73,7 @@ classDiagram
   
   ERC165 --|> IERC165
   
-  %% 405:447:10
+  %% 421:447:10
   class IERC165 {
     <<Interface>>
     #supportsInterface(bytes4 interfaceId): (bool)$
@@ -77,7 +81,7 @@ classDiagram
   
   ERC721 --|> IERC721
   
-  %% 250:4725:1
+  %% 266:4659:2
   class IERC721 {
     <<Interface>>
     #balanceOf(address owner): (uint256 balance)$
@@ -86,14 +90,14 @@ classDiagram
     #safeTransferFrom(address from, address to, uint256 tokenId)$
     #transferFrom(address from, address to, uint256 tokenId)$
     #approve(address to, uint256 tokenId)$
-    #setApprovalForAll(address operator, bool _approved)$
+    #setApprovalForAll(address operator, bool approved)$
     #getApproved(uint256 tokenId): (address operator)$
     #isApprovedForAll(address owner, address operator): (bool)$
   }
   
   IERC721 --|> IERC165
   
-  %% 405:447:10
+  %% 421:447:10
   class IERC165 {
     <<Interface>>
     #supportsInterface(bytes4 interfaceId): (bool)$
@@ -101,7 +105,7 @@ classDiagram
   
   ERC721 --|> IERC721Metadata
   
-  %% 297:463:5
+  %% 328:463:6
   class IERC721Metadata {
     <<Interface>>
     #name(): (string memory)$
@@ -111,7 +115,7 @@ classDiagram
   
   IERC721Metadata --|> IERC721
   
-  %% 250:4725:1
+  %% 266:4659:2
   class IERC721 {
     <<Interface>>
     #balanceOf(address owner): (uint256 balance)$
@@ -120,22 +124,29 @@ classDiagram
     #safeTransferFrom(address from, address to, uint256 tokenId)$
     #transferFrom(address from, address to, uint256 tokenId)$
     #approve(address to, uint256 tokenId)$
-    #setApprovalForAll(address operator, bool _approved)$
+    #setApprovalForAll(address operator, bool approved)$
     #getApproved(uint256 tokenId): (address operator)$
     #isApprovedForAll(address owner, address operator): (bool)$
   }
   
   IERC721 --|> IERC165
   
-  %% 405:447:10
+  %% 421:447:10
   class IERC165 {
     <<Interface>>
     #supportsInterface(bytes4 interfaceId): (bool)$
   }
   
+  ERC721 --|> IERC721Errors
+  
+  %% 2186:2092:0
+  class IERC721Errors {
+    <<Interface>>
+  }
+  
   ERC721Enumerable --|> IERC721Enumerable
   
-  %% 317:706:4
+  %% 333:706:5
   class IERC721Enumerable {
     <<Interface>>
     #totalSupply(): (uint256)$
@@ -145,7 +156,7 @@ classDiagram
   
   IERC721Enumerable --|> IERC721
   
-  %% 250:4725:1
+  %% 266:4659:2
   class IERC721 {
     <<Interface>>
     #balanceOf(address owner): (uint256 balance)$
@@ -154,14 +165,14 @@ classDiagram
     #safeTransferFrom(address from, address to, uint256 tokenId)$
     #transferFrom(address from, address to, uint256 tokenId)$
     #approve(address to, uint256 tokenId)$
-    #setApprovalForAll(address operator, bool _approved)$
+    #setApprovalForAll(address operator, bool approved)$
     #getApproved(uint256 tokenId): (address operator)$
     #isApprovedForAll(address owner, address operator): (bool)$
   }
   
   IERC721 --|> IERC165
   
-  %% 405:447:10
+  %% 421:447:10
   class IERC165 {
     <<Interface>>
     #supportsInterface(bytes4 interfaceId): (bool)$

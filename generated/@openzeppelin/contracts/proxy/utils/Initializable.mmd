@@ -1,9 +1,11 @@
 classDiagram
-  %% 2372:4234:0
+  %% 2349:6560:0
   class Initializable {
     <<Contract>>
+    ~_checkInitializing()
     ~_disableInitializers()
-    ~_getInitializedVersion(): (uint8)
+    ~_getInitializedVersion(): (uint64)
     ~_isInitializing(): (bool)
+    -_getInitializableStorage(): (struct Initializable.InitializableStorage storage $)
   }
   

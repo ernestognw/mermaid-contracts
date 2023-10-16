@@ -1,20 +1,17 @@
 classDiagram
-  %% 435:2404:6
+  %% 502:1442:6
   class ProxyAdmin {
     <<Contract>>
-    +getProxyImplementation(contract TransparentUpgradeableProxy proxy): (address)
-    +getProxyAdmin(contract TransparentUpgradeableProxy proxy): (address)
-    +changeProxyAdmin(contract TransparentUpgradeableProxy proxy, address newAdmin)
-    +upgrade(contract TransparentUpgradeableProxy proxy, address implementation)
-    +upgradeAndCall(contract TransparentUpgradeableProxy proxy, address implementation, bytes memory data)
+    +constructor(address initialOwner)
+    +upgradeAndCall(contract ITransparentUpgradeableProxy proxy, address implementation, bytes memory data)
   }
   
   ProxyAdmin --|> Ownable
   
-  %% 654:1968:0
+  %% 663:2438:0
   class Ownable {
     <<Contract>>
-    ~constructor()
+    ~constructor(address initialOwner)
     +owner(): (address)
     ~_checkOwner()
     +renounceOwnership()
@@ -24,7 +21,7 @@ classDiagram
   
   Ownable --|> Context
   
-  %% 608:235:9
+  %% 624:235:9
   class Context {
     <<Contract>>
     ~_msgSender(): (address)

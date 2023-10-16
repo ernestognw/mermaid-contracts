@@ -1,0 +1,21 @@
+classDiagram
+  %% 615:2214:1
+  class Pausable {
+    <<Contract>>
+    ~constructor()
+    +paused(): (bool)
+    ~_requireNotPaused()
+    ~_requirePaused()
+    ~_pause()
+    ~_unpause()
+  }
+  
+  Pausable --|> Context
+  
+  %% 624:235:0
+  class Context {
+    <<Contract>>
+    ~_msgSender(): (address)
+    ~_msgData(): (bytes calldata)
+  }
+  

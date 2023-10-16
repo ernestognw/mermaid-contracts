@@ -21,8 +21,6 @@ function generate() {
     }),
   ];
 
-  console.log(contracts);
-
   const sources = contracts.reduce(
     (acc, contract) => Object.assign(acc, { [contract.name]: contract }),
     {}

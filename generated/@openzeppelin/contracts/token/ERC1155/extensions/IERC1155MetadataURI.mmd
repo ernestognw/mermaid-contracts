@@ -1,5 +1,5 @@
 classDiagram
-  %% 364:310:1
+  %% 366:310:1
   class IERC1155MetadataURI {
     <<Interface>>
     #uri(uint256 id): (string memory)$
@@ -7,20 +7,20 @@ classDiagram
   
   IERC1155MetadataURI --|> IERC1155
   
-  %% 350:3723:0
+  %% 336:4384:0
   class IERC1155 {
     <<Interface>>
     #balanceOf(address account, uint256 id): (uint256)$
     #balanceOfBatch(address[] calldata accounts, uint256[] calldata ids): (uint256[] memory)$
     #setApprovalForAll(address operator, bool approved)$
     #isApprovedForAll(address account, address operator): (bool)$
-    #safeTransferFrom(address from, address to, uint256 id, uint256 amount, bytes calldata data)$
-    #safeBatchTransferFrom(address from, address to, uint256[] calldata ids, uint256[] calldata amounts, bytes calldata data)$
+    #safeTransferFrom(address from, address to, uint256 id, uint256 value, bytes calldata data)$
+    #safeBatchTransferFrom(address from, address to, uint256[] calldata ids, uint256[] calldata values, bytes calldata data)$
   }
   
   IERC1155 --|> IERC165
   
-  %% 405:447:2
+  %% 421:447:2
   class IERC165 {
     <<Interface>>
     #supportsInterface(bytes4 interfaceId): (bool)$

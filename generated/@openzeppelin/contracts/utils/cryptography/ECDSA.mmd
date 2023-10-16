@@ -1,16 +1,13 @@
 classDiagram
-  %% 369:8168:1
+  %% 344:7386:0
   class ECDSA {
     <<Library>>
-    -_throwError(enum ECDSA.RecoverError error)
-    ~tryRecover(bytes32 hash, bytes memory signature): (address, enum ECDSA.RecoverError)
+    ~tryRecover(bytes32 hash, bytes memory signature): (address, enum ECDSA.RecoverError, bytes32)
     ~recover(bytes32 hash, bytes memory signature): (address)
-    ~tryRecover(bytes32 hash, bytes32 r, bytes32 vs): (address, enum ECDSA.RecoverError)
+    ~tryRecover(bytes32 hash, bytes32 r, bytes32 vs): (address, enum ECDSA.RecoverError, bytes32)
     ~recover(bytes32 hash, bytes32 r, bytes32 vs): (address)
-    ~tryRecover(bytes32 hash, uint8 v, bytes32 r, bytes32 s): (address, enum ECDSA.RecoverError)
+    ~tryRecover(bytes32 hash, uint8 v, bytes32 r, bytes32 s): (address, enum ECDSA.RecoverError, bytes32)
     ~recover(bytes32 hash, uint8 v, bytes32 r, bytes32 s): (address)
-    ~toEthSignedMessageHash(bytes32 hash): (bytes32)
-    ~toEthSignedMessageHash(bytes memory s): (bytes32)
-    ~toTypedDataHash(bytes32 domainSeparator, bytes32 structHash): (bytes32)
+    -_throwError(enum ECDSA.RecoverError error, bytes32 errorArg)
   }
   

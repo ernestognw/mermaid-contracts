@@ -1,39 +1,19 @@
 classDiagram
-  %% 567:723:1
+  %% 599:1116:0
   class ERC1967Proxy {
     <<Contract>>
-    +constructor(address _logic, bytes memory _data)
-    ~_implementation(): (address impl)
+    +constructor(address implementation, bytes memory _data)
+    ~_implementation(): (address)
   }
   
   ERC1967Proxy --|> Proxy
   
-  %% 723:2523:3
+  %% 724:1945:2
   class Proxy {
     <<Contract>>
     ~_delegate(address implementation)
     ~_implementation(): (address)$
     ~_fallback()
     #fallback()
-    #receive()
-    ~_beforeFallback()
-  }
-  
-  ERC1967Proxy --|> ERC1967Upgrade
-  
-  %% 529:5984:2
-  class ERC1967Upgrade {
-    <<Contract>>
-    ~_getImplementation(): (address)
-    -_setImplementation(address newImplementation)
-    ~_upgradeTo(address newImplementation)
-    ~_upgradeToAndCall(address newImplementation, bytes memory data, bool forceCall)
-    ~_upgradeToAndCallUUPS(address newImplementation, bytes memory data, bool forceCall)
-    ~_getAdmin(): (address)
-    -_setAdmin(address newAdmin)
-    ~_changeAdmin(address newAdmin)
-    ~_getBeacon(): (address)
-    -_setBeacon(address newBeacon)
-    ~_upgradeBeaconToAndCall(address newBeacon, bytes memory data, bool forceCall)
   }
   

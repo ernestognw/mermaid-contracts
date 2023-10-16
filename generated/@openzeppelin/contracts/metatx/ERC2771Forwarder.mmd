@@ -1,0 +1,47 @@
+classDiagram
+  %% 2733:14066:2
+  class ERC2771Forwarder {
+    <<Contract>>
+    +constructor(string memory name)
+    +verify(struct ERC2771Forwarder.ForwardRequestData calldata request): (bool)
+    +execute(struct ERC2771Forwarder.ForwardRequestData calldata request)
+    +executeBatch(struct ERC2771Forwarder.ForwardRequestData[] calldata requests, address payable refundReceiver)
+    ~_validate(struct ERC2771Forwarder.ForwardRequestData calldata request): (bool isTrustedForwarder, bool active, bool signerMatch, address signer)
+    ~_recoverForwardRequestSigner(struct ERC2771Forwarder.ForwardRequestData calldata request): (bool, address)
+    ~_execute(struct ERC2771Forwarder.ForwardRequestData calldata request, bool requireValidRequest): (bool success)
+    -_isTrustedByTarget(address target): (bool)
+    -_checkForwardedGas(uint256 gasLeft, struct ERC2771Forwarder.ForwardRequestData calldata request)
+  }
+  
+  ERC2771Forwarder --|> EIP712
+  
+  %% 1960:4650:10
+  class EIP712 {
+    <<Contract>>
+    ~constructor(string memory name, string memory version)
+    ~_domainSeparatorV4(): (bytes32)
+    -_buildDomainSeparator(): (bytes32)
+    ~_hashTypedDataV4(bytes32 structHash): (bytes32)
+    +eip712Domain(): (bytes1 fields, string memory name, string memory version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] memory extensions)
+    ~_EIP712Name(): (string memory)
+    ~_EIP712Version(): (string memory)
+  }
+  
+  EIP712 --|> IERC5267
+  
+  %% 133:605:0
+  class IERC5267 {
+    <<Interface>>
+    #eip712Domain(): (bytes1 fields, string memory name, string memory version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] memory extensions)$
+  }
+  
+  ERC2771Forwarder --|> Nonces
+  
+  %% 209:1280:5
+  class Nonces {
+    <<Contract>>
+    +nonces(address owner): (uint256)
+    ~_useNonce(address owner): (uint256)
+    ~_useCheckedNonce(address owner, uint256 nonce)
+  }
+  

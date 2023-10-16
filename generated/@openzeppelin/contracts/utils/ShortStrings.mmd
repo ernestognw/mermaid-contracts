@@ -1,0 +1,12 @@
+classDiagram
+  %% 1255:3053:0
+  class ShortStrings {
+    <<Library>>
+    ~toShortString(string memory str): (ShortString)
+    ~toString(ShortString sstr): (string memory)
+    ~byteLength(ShortString sstr): (uint256)
+    ~toShortStringWithFallback(string memory value, string storage store): (ShortString)
+    ~toStringWithFallback(ShortString value, string storage store): (string memory)
+    ~byteLengthWithFallback(ShortString value, string storage store): (uint256)
+  }
+  

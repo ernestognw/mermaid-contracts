@@ -1,7 +1,8 @@
 classDiagram
-  %% 531:1177:4
+  %% 531:1742:2
   class SignatureChecker {
     <<Library>>
     ~isValidSignatureNow(address signer, bytes32 hash, bytes memory signature): (bool)
+    ~isValidERC1271SignatureNow(address signer, bytes32 hash, bytes memory signature): (bool)
   }
   

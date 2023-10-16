@@ -1,7 +1,12 @@
 classDiagram
-  %% 202:12302:0
+  %% 203:14914:0
   class Math {
     <<Library>>
+    ~tryAdd(uint256 a, uint256 b): (bool, uint256)
+    ~trySub(uint256 a, uint256 b): (bool, uint256)
+    ~tryMul(uint256 a, uint256 b): (bool, uint256)
+    ~tryDiv(uint256 a, uint256 b): (bool, uint256)
+    ~tryMod(uint256 a, uint256 b): (bool, uint256)
     ~max(uint256 a, uint256 b): (uint256)
     ~min(uint256 a, uint256 b): (uint256)
     ~average(uint256 a, uint256 b): (uint256)
@@ -16,5 +21,6 @@ classDiagram
     ~log10(uint256 value, enum Math.Rounding rounding): (uint256)
     ~log256(uint256 value): (uint256)
     ~log256(uint256 value, enum Math.Rounding rounding): (uint256)
+    ~unsignedRoundsUp(enum Math.Rounding rounding): (bool)
   }
   

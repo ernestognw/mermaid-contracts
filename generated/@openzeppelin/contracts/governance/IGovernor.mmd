@@ -1,34 +1,49 @@
 classDiagram
-  %% 258:9330:0
+  %% 289:14841:0
   class IGovernor {
-    <<Contract>>
-    +name(): (string memory)$
-    +version(): (string memory)$
-    +COUNTING_MODE(): (string memory)$
-    +hashProposal(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32 descriptionHash): (uint256)$
-    +state(uint256 proposalId): (enum IGovernor.ProposalState)$
-    +proposalSnapshot(uint256 proposalId): (uint256)$
-    +proposalDeadline(uint256 proposalId): (uint256)$
-    +votingDelay(): (uint256)$
-    +votingPeriod(): (uint256)$
-    +quorum(uint256 blockNumber): (uint256)$
-    +getVotes(address account, uint256 blockNumber): (uint256)$
-    +getVotesWithParams(address account, uint256 blockNumber, bytes memory params): (uint256)$
-    +hasVoted(uint256 proposalId, address account): (bool)$
-    +propose(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, string memory description): (uint256 proposalId)$
-    +execute(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32 descriptionHash): (uint256 proposalId)$
-    +castVote(uint256 proposalId, uint8 support): (uint256 balance)$
-    +castVoteWithReason(uint256 proposalId, uint8 support, string calldata reason): (uint256 balance)$
-    +castVoteWithReasonAndParams(uint256 proposalId, uint8 support, string calldata reason, bytes memory params): (uint256 balance)$
-    +castVoteBySig(uint256 proposalId, uint8 support, uint8 v, bytes32 r, bytes32 s): (uint256 balance)$
-    +castVoteWithReasonAndParamsBySig(uint256 proposalId, uint8 support, string calldata reason, bytes memory params, uint8 v, bytes32 r, bytes32 s): (uint256 balance)$
+    <<Interface>>
+    #name(): (string memory)$
+    #version(): (string memory)$
+    #COUNTING_MODE(): (string memory)$
+    #hashProposal(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32 descriptionHash): (uint256)$
+    #state(uint256 proposalId): (enum IGovernor.ProposalState)$
+    #proposalThreshold(): (uint256)$
+    #proposalSnapshot(uint256 proposalId): (uint256)$
+    #proposalDeadline(uint256 proposalId): (uint256)$
+    #proposalProposer(uint256 proposalId): (address)$
+    #proposalEta(uint256 proposalId): (uint256)$
+    #proposalNeedsQueuing(uint256 proposalId): (bool)$
+    #votingDelay(): (uint256)$
+    #votingPeriod(): (uint256)$
+    #quorum(uint256 timepoint): (uint256)$
+    #getVotes(address account, uint256 timepoint): (uint256)$
+    #getVotesWithParams(address account, uint256 timepoint, bytes memory params): (uint256)$
+    #hasVoted(uint256 proposalId, address account): (bool)$
+    #propose(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, string memory description): (uint256 proposalId)$
+    #queue(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32 descriptionHash): (uint256 proposalId)$
+    #execute(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32 descriptionHash): (uint256 proposalId)$
+    #cancel(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32 descriptionHash): (uint256 proposalId)$
+    #castVote(uint256 proposalId, uint8 support): (uint256 balance)$
+    #castVoteWithReason(uint256 proposalId, uint8 support, string calldata reason): (uint256 balance)$
+    #castVoteWithReasonAndParams(uint256 proposalId, uint8 support, string calldata reason, bytes memory params): (uint256 balance)$
+    #castVoteBySig(uint256 proposalId, uint8 support, address voter, bytes memory signature): (uint256 balance)$
+    #castVoteWithReasonAndParamsBySig(uint256 proposalId, uint8 support, address voter, string calldata reason, bytes memory params, bytes memory signature): (uint256 balance)$
   }
   
   IGovernor --|> IERC165
   
-  %% 405:447:2
+  %% 421:447:3
   class IERC165 {
     <<Interface>>
     #supportsInterface(bytes4 interfaceId): (bool)$
+  }
+  
+  IGovernor --|> IERC6372
+  
+  %% 133:385:2
+  class IERC6372 {
+    <<Interface>>
+    #clock(): (uint48)$
+    #CLOCK_MODE(): (string memory)$
   }
   

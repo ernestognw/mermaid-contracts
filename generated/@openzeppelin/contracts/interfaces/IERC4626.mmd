@@ -1,5 +1,5 @@
 classDiagram
-  %% 391:11844:0
+  %% 398:11784:0
   class IERC4626 {
     <<Interface>>
     #asset(): (address assetTokenAddress)$
@@ -22,15 +22,15 @@ classDiagram
   
   IERC4626 --|> IERC20
   
-  %% 202:2564:1
+  %% 203:2575:1
   class IERC20 {
     <<Interface>>
     #totalSupply(): (uint256)$
     #balanceOf(address account): (uint256)$
-    #transfer(address to, uint256 amount): (bool)$
+    #transfer(address to, uint256 value): (bool)$
     #allowance(address owner, address spender): (uint256)$
-    #approve(address spender, uint256 amount): (bool)$
-    #transferFrom(address from, address to, uint256 amount): (bool)$
+    #approve(address spender, uint256 value): (bool)$
+    #transferFrom(address from, address to, uint256 value): (bool)$
   }
   
   IERC4626 --|> IERC20Metadata
@@ -45,14 +45,14 @@ classDiagram
   
   IERC20Metadata --|> IERC20
   
-  %% 202:2564:1
+  %% 203:2575:1
   class IERC20 {
     <<Interface>>
     #totalSupply(): (uint256)$
     #balanceOf(address account): (uint256)$
-    #transfer(address to, uint256 amount): (bool)$
+    #transfer(address to, uint256 value): (bool)$
     #allowance(address owner, address spender): (uint256)$
-    #approve(address spender, uint256 amount): (bool)$
-    #transferFrom(address from, address to, uint256 amount): (bool)$
+    #approve(address spender, uint256 value): (bool)$
+    #transferFrom(address from, address to, uint256 value): (bool)$
   }
   

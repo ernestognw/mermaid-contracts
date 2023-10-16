@@ -1,39 +1,37 @@
 classDiagram
-  %% 469:462:3
+  %% 929:330:3
   class ERC20Pausable {
     <<Contract>>
-    ~_beforeTokenTransfer(address from, address to, uint256 amount)
+    ~_update(address from, address to, uint256 value)
   }
   
   ERC20Pausable --|> ERC20
   
-  %% 1401:11610:1
+  %% 1401:9741:1
   class ERC20 {
     <<Contract>>
-    +constructor(string memory name_, string memory symbol_)
+    ~constructor(string memory name_, string memory symbol_)
     +name(): (string memory)
     +symbol(): (string memory)
     +decimals(): (uint8)
     +totalSupply(): (uint256)
     +balanceOf(address account): (uint256)
-    +transfer(address to, uint256 amount): (bool)
+    +transfer(address to, uint256 value): (bool)
     +allowance(address owner, address spender): (uint256)
-    +approve(address spender, uint256 amount): (bool)
-    +transferFrom(address from, address to, uint256 amount): (bool)
-    +increaseAllowance(address spender, uint256 addedValue): (bool)
-    +decreaseAllowance(address spender, uint256 subtractedValue): (bool)
-    ~_transfer(address from, address to, uint256 amount)
-    ~_mint(address account, uint256 amount)
-    ~_burn(address account, uint256 amount)
-    ~_approve(address owner, address spender, uint256 amount)
-    ~_spendAllowance(address owner, address spender, uint256 amount)
-    ~_beforeTokenTransfer(address from, address to, uint256 amount)
-    ~_afterTokenTransfer(address from, address to, uint256 amount)
+    +approve(address spender, uint256 value): (bool)
+    +transferFrom(address from, address to, uint256 value): (bool)
+    ~_transfer(address from, address to, uint256 value)
+    ~_update(address from, address to, uint256 value)
+    ~_mint(address account, uint256 value)
+    ~_burn(address account, uint256 value)
+    ~_approve(address owner, address spender, uint256 value)
+    ~_approve(address owner, address spender, uint256 value, bool emitEvent)
+    ~_spendAllowance(address owner, address spender, uint256 value)
   }
   
   ERC20 --|> Context
   
-  %% 608:235:5
+  %% 624:235:5
   class Context {
     <<Contract>>
     ~_msgSender(): (address)
@@ -42,15 +40,15 @@ classDiagram
   
   ERC20 --|> IERC20
   
-  %% 202:2564:2
+  %% 203:2575:2
   class IERC20 {
     <<Interface>>
     #totalSupply(): (uint256)$
     #balanceOf(address account): (uint256)$
-    #transfer(address to, uint256 amount): (bool)$
+    #transfer(address to, uint256 value): (bool)$
     #allowance(address owner, address spender): (uint256)$
-    #approve(address spender, uint256 amount): (bool)$
-    #transferFrom(address from, address to, uint256 amount): (bool)$
+    #approve(address spender, uint256 value): (bool)$
+    #transferFrom(address from, address to, uint256 value): (bool)$
   }
   
   ERC20 --|> IERC20Metadata
@@ -65,20 +63,27 @@ classDiagram
   
   IERC20Metadata --|> IERC20
   
-  %% 202:2564:2
+  %% 203:2575:2
   class IERC20 {
     <<Interface>>
     #totalSupply(): (uint256)$
     #balanceOf(address account): (uint256)$
-    #transfer(address to, uint256 amount): (bool)$
+    #transfer(address to, uint256 value): (bool)$
     #allowance(address owner, address spender): (uint256)$
-    #approve(address spender, uint256 amount): (bool)$
-    #transferFrom(address from, address to, uint256 amount): (bool)$
+    #approve(address spender, uint256 value): (bool)$
+    #transferFrom(address from, address to, uint256 value): (bool)$
+  }
+  
+  ERC20 --|> IERC20Errors
+  
+  %% 278:1764:0
+  class IERC20Errors {
+    <<Interface>>
   }
   
   ERC20Pausable --|> Pausable
   
-  %% 602:1950:0
+  %% 615:2214:6
   class Pausable {
     <<Contract>>
     ~constructor()
@@ -91,7 +96,7 @@ classDiagram
   
   Pausable --|> Context
   
-  %% 608:235:5
+  %% 624:235:5
   class Context {
     <<Contract>>
     ~_msgSender(): (address)

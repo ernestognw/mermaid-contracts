@@ -1,0 +1,9 @@
+classDiagram
+  %% 209:1280:0
+  class Nonces {
+    <<Contract>>
+    +nonces(address owner): (uint256)
+    ~_useNonce(address owner): (uint256)
+    ~_useCheckedNonce(address owner, uint256 nonce)
+  }
+  

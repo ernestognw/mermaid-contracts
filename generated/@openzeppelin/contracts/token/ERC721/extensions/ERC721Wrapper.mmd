@@ -1,0 +1,150 @@
+classDiagram
+  %% 652:3634:4
+  class ERC721Wrapper {
+    <<Contract>>
+    ~constructor(contract IERC721 underlyingToken)
+    +depositFor(address account, uint256[] memory tokenIds): (bool)
+    +withdrawTo(address account, uint256[] memory tokenIds): (bool)
+    +onERC721Received(address, address from, uint256 tokenId, bytes memory): (bytes4)
+    ~_recover(address account, uint256 tokenId): (uint256)
+    +underlying(): (contract IERC721)
+  }
+  
+  ERC721Wrapper --|> ERC721
+  
+  %% 776:16926:1
+  class ERC721 {
+    <<Contract>>
+    ~constructor(string memory name_, string memory symbol_)
+    +supportsInterface(bytes4 interfaceId): (bool)
+    +balanceOf(address owner): (uint256)
+    +ownerOf(uint256 tokenId): (address)
+    +name(): (string memory)
+    +symbol(): (string memory)
+    +tokenURI(uint256 tokenId): (string memory)
+    ~_baseURI(): (string memory)
+    +approve(address to, uint256 tokenId)
+    +getApproved(uint256 tokenId): (address)
+    +setApprovalForAll(address operator, bool approved)
+    +isApprovedForAll(address owner, address operator): (bool)
+    +transferFrom(address from, address to, uint256 tokenId)
+    +safeTransferFrom(address from, address to, uint256 tokenId)
+    +safeTransferFrom(address from, address to, uint256 tokenId, bytes memory data)
+    ~_ownerOf(uint256 tokenId): (address)
+    ~_getApproved(uint256 tokenId): (address)
+    ~_isAuthorized(address owner, address spender, uint256 tokenId): (bool)
+    ~_checkAuthorized(address owner, address spender, uint256 tokenId)
+    ~_increaseBalance(address account, uint128 value)
+    ~_update(address to, uint256 tokenId, address auth): (address)
+    ~_mint(address to, uint256 tokenId)
+    ~_safeMint(address to, uint256 tokenId)
+    ~_safeMint(address to, uint256 tokenId, bytes memory data)
+    ~_burn(uint256 tokenId)
+    ~_transfer(address from, address to, uint256 tokenId)
+    ~_safeTransfer(address from, address to, uint256 tokenId)
+    ~_safeTransfer(address from, address to, uint256 tokenId, bytes memory data)
+    ~_approve(address to, uint256 tokenId, address auth)
+    ~_approve(address to, uint256 tokenId, address auth, bool emitEvent)
+    ~_setApprovalForAll(address owner, address operator, bool approved)
+    ~_requireOwned(uint256 tokenId): (address)
+    -_checkOnERC721Received(address from, address to, uint256 tokenId, bytes memory data)
+  }
+  
+  ERC721 --|> Context
+  
+  %% 624:235:6
+  class Context {
+    <<Contract>>
+    ~_msgSender(): (address)
+    ~_msgData(): (bytes calldata)
+  }
+  
+  ERC721 --|> ERC165
+  
+  %% 659:251:8
+  class ERC165 {
+    <<Contract>>
+    +supportsInterface(bytes4 interfaceId): (bool)
+  }
+  
+  ERC165 --|> IERC165
+  
+  %% 421:447:9
+  class IERC165 {
+    <<Interface>>
+    #supportsInterface(bytes4 interfaceId): (bool)$
+  }
+  
+  ERC721 --|> IERC721
+  
+  %% 266:4659:2
+  class IERC721 {
+    <<Interface>>
+    #balanceOf(address owner): (uint256 balance)$
+    #ownerOf(uint256 tokenId): (address owner)$
+    #safeTransferFrom(address from, address to, uint256 tokenId, bytes calldata data)$
+    #safeTransferFrom(address from, address to, uint256 tokenId)$
+    #transferFrom(address from, address to, uint256 tokenId)$
+    #approve(address to, uint256 tokenId)$
+    #setApprovalForAll(address operator, bool approved)$
+    #getApproved(uint256 tokenId): (address operator)$
+    #isApprovedForAll(address owner, address operator): (bool)$
+  }
+  
+  IERC721 --|> IERC165
+  
+  %% 421:447:9
+  class IERC165 {
+    <<Interface>>
+    #supportsInterface(bytes4 interfaceId): (bool)$
+  }
+  
+  ERC721 --|> IERC721Metadata
+  
+  %% 328:463:5
+  class IERC721Metadata {
+    <<Interface>>
+    #name(): (string memory)$
+    #symbol(): (string memory)$
+    #tokenURI(uint256 tokenId): (string memory)$
+  }
+  
+  IERC721Metadata --|> IERC721
+  
+  %% 266:4659:2
+  class IERC721 {
+    <<Interface>>
+    #balanceOf(address owner): (uint256 balance)$
+    #ownerOf(uint256 tokenId): (address owner)$
+    #safeTransferFrom(address from, address to, uint256 tokenId, bytes calldata data)$
+    #safeTransferFrom(address from, address to, uint256 tokenId)$
+    #transferFrom(address from, address to, uint256 tokenId)$
+    #approve(address to, uint256 tokenId)$
+    #setApprovalForAll(address operator, bool approved)$
+    #getApproved(uint256 tokenId): (address operator)$
+    #isApprovedForAll(address owner, address operator): (bool)$
+  }
+  
+  IERC721 --|> IERC165
+  
+  %% 421:447:9
+  class IERC165 {
+    <<Interface>>
+    #supportsInterface(bytes4 interfaceId): (bool)$
+  }
+  
+  ERC721 --|> IERC721Errors
+  
+  %% 2186:2092:0
+  class IERC721Errors {
+    <<Interface>>
+  }
+  
+  ERC721Wrapper --|> IERC721Receiver
+  
+  %% 295:699:3
+  class IERC721Receiver {
+    <<Interface>>
+    #onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data): (bytes4)$
+  }
+  

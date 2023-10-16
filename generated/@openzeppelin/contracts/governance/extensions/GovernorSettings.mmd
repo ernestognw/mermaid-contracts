@@ -1,22 +1,22 @@
 classDiagram
-  %% 276:3298:2
+  %% 278:3352:2
   class GovernorSettings {
     <<Contract>>
-    ~constructor(uint256 initialVotingDelay, uint256 initialVotingPeriod, uint256 initialProposalThreshold)
+    ~constructor(uint48 initialVotingDelay, uint32 initialVotingPeriod, uint256 initialProposalThreshold)
     +votingDelay(): (uint256)
     +votingPeriod(): (uint256)
     +proposalThreshold(): (uint256)
-    +setVotingDelay(uint256 newVotingDelay)
-    +setVotingPeriod(uint256 newVotingPeriod)
+    +setVotingDelay(uint48 newVotingDelay)
+    +setVotingPeriod(uint32 newVotingPeriod)
     +setProposalThreshold(uint256 newProposalThreshold)
-    ~_setVotingDelay(uint256 newVotingDelay)
-    ~_setVotingPeriod(uint256 newVotingPeriod)
+    ~_setVotingDelay(uint48 newVotingDelay)
+    ~_setVotingPeriod(uint32 newVotingPeriod)
     ~_setProposalThreshold(uint256 newProposalThreshold)
   }
   
   GovernorSettings --|> Governor
   
-  %% 998:19695:0
+  %% 1197:30252:0
   class Governor {
     <<Contract>>
     ~constructor(string memory name_)
@@ -26,27 +26,33 @@ classDiagram
     +version(): (string memory)
     +hashProposal(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32 descriptionHash): (uint256)
     +state(uint256 proposalId): (enum IGovernor.ProposalState)
+    +proposalThreshold(): (uint256)
     +proposalSnapshot(uint256 proposalId): (uint256)
     +proposalDeadline(uint256 proposalId): (uint256)
-    +proposalThreshold(): (uint256)
+    +proposalProposer(uint256 proposalId): (address)
+    +proposalEta(uint256 proposalId): (uint256)
+    +proposalNeedsQueuing(uint256): (bool)
+    ~_checkGovernance()
     ~_quorumReached(uint256 proposalId): (bool)$
     ~_voteSucceeded(uint256 proposalId): (bool)$
-    ~_getVotes(address account, uint256 blockNumber, bytes memory params): (uint256)$
+    ~_getVotes(address account, uint256 timepoint, bytes memory params): (uint256)$
     ~_countVote(uint256 proposalId, address account, uint8 support, uint256 weight, bytes memory params)$
     ~_defaultParams(): (bytes memory)
     +propose(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, string memory description): (uint256)
+    ~_propose(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, string memory description, address proposer): (uint256 proposalId)
+    +queue(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32 descriptionHash): (uint256)
+    ~_queueOperations(uint256, address[] memory, uint256[] memory, bytes[] memory, bytes32): (uint48)
     +execute(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32 descriptionHash): (uint256)
-    ~_execute(uint256, address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32)
-    ~_beforeExecute(uint256, address[] memory targets, uint256[] memory, bytes[] memory calldatas, bytes32)
-    ~_afterExecute(uint256, address[] memory, uint256[] memory, bytes[] memory, bytes32)
+    ~_executeOperations(uint256, address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32)
+    +cancel(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32 descriptionHash): (uint256)
     ~_cancel(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32 descriptionHash): (uint256)
-    +getVotes(address account, uint256 blockNumber): (uint256)
-    +getVotesWithParams(address account, uint256 blockNumber, bytes memory params): (uint256)
+    +getVotes(address account, uint256 timepoint): (uint256)
+    +getVotesWithParams(address account, uint256 timepoint, bytes memory params): (uint256)
     +castVote(uint256 proposalId, uint8 support): (uint256)
     +castVoteWithReason(uint256 proposalId, uint8 support, string calldata reason): (uint256)
     +castVoteWithReasonAndParams(uint256 proposalId, uint8 support, string calldata reason, bytes memory params): (uint256)
-    +castVoteBySig(uint256 proposalId, uint8 support, uint8 v, bytes32 r, bytes32 s): (uint256)
-    +castVoteWithReasonAndParamsBySig(uint256 proposalId, uint8 support, string calldata reason, bytes memory params, uint8 v, bytes32 r, bytes32 s): (uint256)
+    +castVoteBySig(uint256 proposalId, uint8 support, address voter, bytes memory signature): (uint256)
+    +castVoteWithReasonAndParamsBySig(uint256 proposalId, uint8 support, address voter, string calldata reason, bytes memory params, bytes memory signature): (uint256)
     ~_castVote(uint256 proposalId, address account, uint8 support, string memory reason): (uint256)
     ~_castVote(uint256 proposalId, address account, uint8 support, string memory reason, bytes memory params): (uint256)
     #relay(address target, uint256 value, bytes calldata data)
@@ -54,11 +60,20 @@ classDiagram
     +onERC721Received(address, address, uint256, bytes memory): (bytes4)
     +onERC1155Received(address, address, uint256, uint256, bytes memory): (bytes4)
     +onERC1155BatchReceived(address, address, uint256[] memory, uint256[] memory, bytes memory): (bytes4)
+    ~_encodeStateBitmap(enum IGovernor.ProposalState proposalState): (bytes32)
+    -_validateStateBitmap(uint256 proposalId, bytes32 allowedStates): (enum IGovernor.ProposalState)
+    ~_isValidDescriptionForProposer(address proposer, string memory description): (bool)
+    -_tryHexToUint(bytes1 char): (bool, uint8)
+    +clock(): (uint48)$
+    +CLOCK_MODE(): (string memory)$
+    +votingDelay(): (uint256)$
+    +votingPeriod(): (uint256)$
+    +quorum(uint256 timepoint): (uint256)$
   }
   
   Governor --|> Context
   
-  %% 608:235:6
+  %% 624:235:10
   class Context {
     <<Contract>>
     ~_msgSender(): (address)
@@ -67,7 +82,7 @@ classDiagram
   
   Governor --|> ERC165
   
-  %% 726:260:11
+  %% 659:251:19
   class ERC165 {
     <<Contract>>
     +supportsInterface(bytes4 interfaceId): (bool)
@@ -75,7 +90,7 @@ classDiagram
   
   ERC165 --|> IERC165
   
-  %% 405:447:12
+  %% 421:447:20
   class IERC165 {
     <<Interface>>
     #supportsInterface(bytes4 interfaceId): (bool)$
@@ -83,53 +98,89 @@ classDiagram
   
   Governor --|> EIP712
   
-  %% 1304:3211:10
+  %% 1960:4650:16
   class EIP712 {
     <<Contract>>
     ~constructor(string memory name, string memory version)
     ~_domainSeparatorV4(): (bytes32)
-    -_buildDomainSeparator(bytes32 typeHash, bytes32 nameHash, bytes32 versionHash): (bytes32)
+    -_buildDomainSeparator(): (bytes32)
     ~_hashTypedDataV4(bytes32 structHash): (bytes32)
+    +eip712Domain(): (bytes1 fields, string memory name, string memory version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] memory extensions)
+    ~_EIP712Name(): (string memory)
+    ~_EIP712Version(): (string memory)
+  }
+  
+  EIP712 --|> IERC5267
+  
+  %% 133:605:5
+  class IERC5267 {
+    <<Interface>>
+    #eip712Domain(): (bytes1 fields, string memory name, string memory version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] memory extensions)$
+  }
+  
+  Governor --|> Nonces
+  
+  %% 209:1280:11
+  class Nonces {
+    <<Contract>>
+    +nonces(address owner): (uint256)
+    ~_useNonce(address owner): (uint256)
+    ~_useCheckedNonce(address owner, uint256 nonce)
   }
   
   Governor --|> IGovernor
   
-  %% 258:9330:1
+  %% 289:14841:1
   class IGovernor {
-    <<Contract>>
-    +name(): (string memory)$
-    +version(): (string memory)$
-    +COUNTING_MODE(): (string memory)$
-    +hashProposal(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32 descriptionHash): (uint256)$
-    +state(uint256 proposalId): (enum IGovernor.ProposalState)$
-    +proposalSnapshot(uint256 proposalId): (uint256)$
-    +proposalDeadline(uint256 proposalId): (uint256)$
-    +votingDelay(): (uint256)$
-    +votingPeriod(): (uint256)$
-    +quorum(uint256 blockNumber): (uint256)$
-    +getVotes(address account, uint256 blockNumber): (uint256)$
-    +getVotesWithParams(address account, uint256 blockNumber, bytes memory params): (uint256)$
-    +hasVoted(uint256 proposalId, address account): (bool)$
-    +propose(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, string memory description): (uint256 proposalId)$
-    +execute(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32 descriptionHash): (uint256 proposalId)$
-    +castVote(uint256 proposalId, uint8 support): (uint256 balance)$
-    +castVoteWithReason(uint256 proposalId, uint8 support, string calldata reason): (uint256 balance)$
-    +castVoteWithReasonAndParams(uint256 proposalId, uint8 support, string calldata reason, bytes memory params): (uint256 balance)$
-    +castVoteBySig(uint256 proposalId, uint8 support, uint8 v, bytes32 r, bytes32 s): (uint256 balance)$
-    +castVoteWithReasonAndParamsBySig(uint256 proposalId, uint8 support, string calldata reason, bytes memory params, uint8 v, bytes32 r, bytes32 s): (uint256 balance)$
+    <<Interface>>
+    #name(): (string memory)$
+    #version(): (string memory)$
+    #COUNTING_MODE(): (string memory)$
+    #hashProposal(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32 descriptionHash): (uint256)$
+    #state(uint256 proposalId): (enum IGovernor.ProposalState)$
+    #proposalThreshold(): (uint256)$
+    #proposalSnapshot(uint256 proposalId): (uint256)$
+    #proposalDeadline(uint256 proposalId): (uint256)$
+    #proposalProposer(uint256 proposalId): (address)$
+    #proposalEta(uint256 proposalId): (uint256)$
+    #proposalNeedsQueuing(uint256 proposalId): (bool)$
+    #votingDelay(): (uint256)$
+    #votingPeriod(): (uint256)$
+    #quorum(uint256 timepoint): (uint256)$
+    #getVotes(address account, uint256 timepoint): (uint256)$
+    #getVotesWithParams(address account, uint256 timepoint, bytes memory params): (uint256)$
+    #hasVoted(uint256 proposalId, address account): (bool)$
+    #propose(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, string memory description): (uint256 proposalId)$
+    #queue(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32 descriptionHash): (uint256 proposalId)$
+    #execute(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32 descriptionHash): (uint256 proposalId)$
+    #cancel(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32 descriptionHash): (uint256 proposalId)$
+    #castVote(uint256 proposalId, uint8 support): (uint256 balance)$
+    #castVoteWithReason(uint256 proposalId, uint8 support, string calldata reason): (uint256 balance)$
+    #castVoteWithReasonAndParams(uint256 proposalId, uint8 support, string calldata reason, bytes memory params): (uint256 balance)$
+    #castVoteBySig(uint256 proposalId, uint8 support, address voter, bytes memory signature): (uint256 balance)$
+    #castVoteWithReasonAndParamsBySig(uint256 proposalId, uint8 support, address voter, string calldata reason, bytes memory params, bytes memory signature): (uint256 balance)$
   }
   
   IGovernor --|> IERC165
   
-  %% 405:447:12
+  %% 421:447:20
   class IERC165 {
     <<Interface>>
     #supportsInterface(bytes4 interfaceId): (bool)$
   }
   
+  IGovernor --|> IERC6372
+  
+  %% 133:385:6
+  class IERC6372 {
+    <<Interface>>
+    #clock(): (uint48)$
+    #CLOCK_MODE(): (string memory)$
+  }
+  
   Governor --|> IERC721Receiver
   
-  %% 294:692:4
+  %% 295:699:8
   class IERC721Receiver {
     <<Interface>>
     #onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data): (bytes4)$
@@ -137,7 +188,7 @@ classDiagram
   
   Governor --|> IERC1155Receiver
   
-  %% 232:2269:3
+  %% 327:2269:7
   class IERC1155Receiver {
     <<Interface>>
     #onERC1155Received(address operator, address from, uint256 id, uint256 value, bytes calldata data): (bytes4)$
@@ -146,7 +197,7 @@ classDiagram
   
   IERC1155Receiver --|> IERC165
   
-  %% 405:447:12
+  %% 421:447:20
   class IERC165 {
     <<Interface>>
     #supportsInterface(bytes4 interfaceId): (bool)$

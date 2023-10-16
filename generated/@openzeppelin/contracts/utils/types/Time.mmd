@@ -1,0 +1,15 @@
+classDiagram
+  %% 640:4454:2
+  class Time {
+    <<Library>>
+    ~timestamp(): (uint48)
+    ~blockNumber(): (uint48)
+    ~toDelay(uint32 duration): (Time.Delay)
+    -_getFullAt(Time.Delay self, uint48 timepoint): (uint32, uint32, uint48)
+    ~getFull(Time.Delay self): (uint32, uint32, uint48)
+    ~get(Time.Delay self): (uint32)
+    ~withUpdate(Time.Delay self, uint32 newValue, uint32 minSetback): (Time.Delay updatedDelay, uint48 effect)
+    ~unpack(Time.Delay self): (uint32 valueBefore, uint32 valueAfter, uint48 effect)
+    ~pack(uint32 valueBefore, uint32 valueAfter, uint48 effect): (Time.Delay)
+  }
+  

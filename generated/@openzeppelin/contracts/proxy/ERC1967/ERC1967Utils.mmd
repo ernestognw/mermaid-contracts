@@ -1,0 +1,16 @@
+classDiagram
+  %% 449:6273:0
+  class ERC1967Utils {
+    <<Library>>
+    ~getImplementation(): (address)
+    -_setImplementation(address newImplementation)
+    ~upgradeToAndCall(address newImplementation, bytes memory data)
+    ~getAdmin(): (address)
+    -_setAdmin(address newAdmin)
+    ~changeAdmin(address newAdmin)
+    ~getBeacon(): (address)
+    -_setBeacon(address newBeacon)
+    ~upgradeBeaconToAndCall(address newBeacon, bytes memory data)
+    -_checkNonPayable()
+  }
+  

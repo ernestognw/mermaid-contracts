@@ -1,10 +1,12 @@
 classDiagram
-  %% 188:2065:0
+  %% 251:2847:0
   class Strings {
     <<Library>>
     ~toString(uint256 value): (string memory)
+    ~toStringSigned(int256 value): (string memory)
     ~toHexString(uint256 value): (string memory)
     ~toHexString(uint256 value, uint256 length): (string memory)
     ~toHexString(address addr): (string memory)
+    ~equal(string memory a, string memory b): (bool)
   }
   

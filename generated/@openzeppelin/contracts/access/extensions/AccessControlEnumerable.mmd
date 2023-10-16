@@ -1,0 +1,87 @@
+classDiagram
+  %% 445:2248:2
+  class AccessControlEnumerable {
+    <<Contract>>
+    +supportsInterface(bytes4 interfaceId): (bool)
+    +getRoleMember(bytes32 role, uint256 index): (address)
+    +getRoleMemberCount(bytes32 role): (uint256)
+    ~_grantRole(bytes32 role, address account): (bool)
+    ~_revokeRole(bytes32 role, address account): (bool)
+  }
+  
+  AccessControlEnumerable --|> IAccessControlEnumerable
+  
+  %% 311:966:3
+  class IAccessControlEnumerable {
+    <<Interface>>
+    #getRoleMember(bytes32 role, uint256 index): (address)$
+    #getRoleMemberCount(bytes32 role): (uint256)$
+  }
+  
+  IAccessControlEnumerable --|> IAccessControl
+  
+  %% 225:3033:1
+  class IAccessControl {
+    <<Interface>>
+    #hasRole(bytes32 role, address account): (bool)$
+    #getRoleAdmin(bytes32 role): (bytes32)$
+    #grantRole(bytes32 role, address account)$
+    #revokeRole(bytes32 role, address account)$
+    #renounceRole(bytes32 role, address callerConfirmation)$
+  }
+  
+  AccessControlEnumerable --|> AccessControl
+  
+  %% 1953:5096:0
+  class AccessControl {
+    <<Contract>>
+    +supportsInterface(bytes4 interfaceId): (bool)
+    +hasRole(bytes32 role, address account): (bool)
+    ~_checkRole(bytes32 role)
+    ~_checkRole(bytes32 role, address account)
+    +getRoleAdmin(bytes32 role): (bytes32)
+    +grantRole(bytes32 role, address account)
+    +revokeRole(bytes32 role, address account)
+    +renounceRole(bytes32 role, address callerConfirmation)
+    ~_setRoleAdmin(bytes32 role, bytes32 adminRole)
+    ~_grantRole(bytes32 role, address account): (bool)
+    ~_revokeRole(bytes32 role, address account): (bool)
+  }
+  
+  AccessControl --|> Context
+  
+  %% 624:235:4
+  class Context {
+    <<Contract>>
+    ~_msgSender(): (address)
+    ~_msgData(): (bytes calldata)
+  }
+  
+  AccessControl --|> IAccessControl
+  
+  %% 225:3033:1
+  class IAccessControl {
+    <<Interface>>
+    #hasRole(bytes32 role, address account): (bool)$
+    #getRoleAdmin(bytes32 role): (bytes32)$
+    #grantRole(bytes32 role, address account)$
+    #revokeRole(bytes32 role, address account)$
+    #renounceRole(bytes32 role, address callerConfirmation)$
+  }
+  
+  AccessControl --|> ERC165
+  
+  %% 659:251:5
+  class ERC165 {
+    <<Contract>>
+    +supportsInterface(bytes4 interfaceId): (bool)
+  }
+  
+  ERC165 --|> IERC165
+  
+  %% 421:447:6
+  class IERC165 {
+    <<Interface>>
+    #supportsInterface(bytes4 interfaceId): (bool)$
+  }
+  

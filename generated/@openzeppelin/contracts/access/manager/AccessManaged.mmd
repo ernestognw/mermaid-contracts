@@ -1,0 +1,31 @@
+classDiagram
+  %% 918:3805:0
+  class AccessManaged {
+    <<Contract>>
+    ~constructor(address initialAuthority)
+    +authority(): (address)
+    +setAuthority(address newAuthority)
+    +isConsumingScheduledOp(): (bytes4)
+    ~_setAuthority(address newAuthority)
+    ~_checkCanCall(address caller, bytes calldata data)
+  }
+  
+  AccessManaged --|> Context
+  
+  %% 624:235:5
+  class Context {
+    <<Contract>>
+    ~_msgSender(): (address)
+    ~_msgData(): (bytes calldata)
+  }
+  
+  AccessManaged --|> IAccessManaged
+  
+  %% 143:967:2
+  class IAccessManaged {
+    <<Interface>>
+    #authority(): (address)$
+    #setAuthority(address)$
+    #isConsumingScheduledOp(): (bytes4)$
+  }
+  

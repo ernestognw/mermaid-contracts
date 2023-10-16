@@ -1,0 +1,107 @@
+classDiagram
+  %% 3726:25635:0
+  class AccessManager {
+    <<Contract>>
+    +constructor(address initialAdmin)
+    +canCall(address caller, address target, bytes4 selector): (bool immediate, uint32 delay)
+    +expiration(): (uint32)
+    +minSetback(): (uint32)
+    +isTargetClosed(address target): (bool)
+    +getTargetFunctionRole(address target, bytes4 selector): (uint64)
+    +getTargetAdminDelay(address target): (uint32)
+    +getRoleAdmin(uint64 roleId): (uint64)
+    +getRoleGuardian(uint64 roleId): (uint64)
+    +getRoleGrantDelay(uint64 roleId): (uint32)
+    +getAccess(uint64 roleId, address account): (uint48 since, uint32 currentDelay, uint32 pendingDelay, uint48 effect)
+    +hasRole(uint64 roleId, address account): (bool isMember, uint32 executionDelay)
+    +labelRole(uint64 roleId, string calldata label)
+    +grantRole(uint64 roleId, address account, uint32 executionDelay)
+    +revokeRole(uint64 roleId, address account)
+    +renounceRole(uint64 roleId, address callerConfirmation)
+    +setRoleAdmin(uint64 roleId, uint64 admin)
+    +setRoleGuardian(uint64 roleId, uint64 guardian)
+    +setGrantDelay(uint64 roleId, uint32 newDelay)
+    ~_grantRole(uint64 roleId, address account, uint32 grantDelay, uint32 executionDelay): (bool)
+    ~_revokeRole(uint64 roleId, address account): (bool)
+    ~_setRoleAdmin(uint64 roleId, uint64 admin)
+    ~_setRoleGuardian(uint64 roleId, uint64 guardian)
+    ~_setGrantDelay(uint64 roleId, uint32 newDelay)
+    +setTargetFunctionRole(address target, bytes4[] calldata selectors, uint64 roleId)
+    ~_setTargetFunctionRole(address target, bytes4 selector, uint64 roleId)
+    +setTargetAdminDelay(address target, uint32 newDelay)
+    ~_setTargetAdminDelay(address target, uint32 newDelay)
+    +setTargetClosed(address target, bool closed)
+    ~_setTargetClosed(address target, bool closed)
+    +getSchedule(bytes32 id): (uint48)
+    +getNonce(bytes32 id): (uint32)
+    +schedule(address target, bytes calldata data, uint48 when): (bytes32 operationId, uint32 nonce)
+    -_checkNotScheduled(bytes32 operationId)
+    +execute(address target, bytes calldata data): (uint32)
+    +cancel(address caller, address target, bytes calldata data): (uint32)
+    +consumeScheduledOp(address caller, bytes calldata data)
+    ~_consumeScheduledOp(bytes32 operationId): (uint32)
+    +hashOperation(address caller, address target, bytes calldata data): (bytes32)
+    +updateAuthority(address target, address newAuthority)
+    -_checkAuthorized()
+    -_getAdminRestrictions(bytes calldata data): (bool restricted, uint64 roleAdminId, uint32 executionDelay)
+    -_canCallExtended(address caller, address target, bytes calldata data): (bool immediate, uint32 delay)
+    -_canCallSelf(address caller, bytes calldata data): (bool immediate, uint32 delay)
+    -_isExecuting(address target, bytes4 selector): (bool)
+    -_isExpired(uint48 timepoint): (bool)
+    -_checkSelector(bytes calldata data): (bytes4)
+    -_hashExecutionId(address target, bytes4 selector): (bytes32)
+  }
+  
+  AccessManager --|> Context
+  
+  %% 624:235:4
+  class Context {
+    <<Contract>>
+    ~_msgSender(): (address)
+    ~_msgData(): (bytes calldata)
+  }
+  
+  AccessManager --|> Multicall
+  
+  %% 265:501:5
+  class Multicall {
+    <<Contract>>
+    #multicall(bytes[] calldata data): (bytes[] memory results)
+  }
+  
+  AccessManager --|> IAccessManager
+  
+  %% 246:15841:2
+  class IAccessManager {
+    <<Interface>>
+    #canCall(address caller, address target, bytes4 selector): (bool allowed, uint32 delay)$
+    #expiration(): (uint32)$
+    #minSetback(): (uint32)$
+    #isTargetClosed(address target): (bool)$
+    #getTargetFunctionRole(address target, bytes4 selector): (uint64)$
+    #getTargetAdminDelay(address target): (uint32)$
+    #getRoleAdmin(uint64 roleId): (uint64)$
+    #getRoleGuardian(uint64 roleId): (uint64)$
+    #getRoleGrantDelay(uint64 roleId): (uint32)$
+    #getAccess(uint64 roleId, address account): (uint48, uint32, uint32, uint48)$
+    #hasRole(uint64 roleId, address account): (bool, uint32)$
+    #labelRole(uint64 roleId, string calldata label)$
+    #grantRole(uint64 roleId, address account, uint32 executionDelay)$
+    #revokeRole(uint64 roleId, address account)$
+    #renounceRole(uint64 roleId, address callerConfirmation)$
+    #setRoleAdmin(uint64 roleId, uint64 admin)$
+    #setRoleGuardian(uint64 roleId, uint64 guardian)$
+    #setGrantDelay(uint64 roleId, uint32 newDelay)$
+    #setTargetFunctionRole(address target, bytes4[] calldata selectors, uint64 roleId)$
+    #setTargetAdminDelay(address target, uint32 newDelay)$
+    #setTargetClosed(address target, bool closed)$
+    #getSchedule(bytes32 id): (uint48)$
+    #getNonce(bytes32 id): (uint32)$
+    #schedule(address target, bytes calldata data, uint48 when): (bytes32, uint32)$
+    #execute(address target, bytes calldata data): (uint32)$
+    #cancel(address caller, address target, bytes calldata data): (uint32)$
+    #consumeScheduledOp(address caller, bytes calldata data)$
+    #hashOperation(address caller, address target, bytes calldata data): (bytes32)$
+    #updateAuthority(address target, address newAuthority)$
+  }
+  

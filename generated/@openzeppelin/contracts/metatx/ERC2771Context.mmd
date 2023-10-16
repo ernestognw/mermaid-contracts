@@ -1,8 +1,9 @@
 classDiagram
-  %% 220:1159:0
+  %% 724:2215:0
   class ERC2771Context {
     <<Contract>>
-    ~constructor(address trustedForwarder)
+    ~constructor(address trustedForwarder_)
+    +trustedForwarder(): (address)
     +isTrustedForwarder(address forwarder): (bool)
     ~_msgSender(): (address sender)
     ~_msgData(): (bytes calldata)
@@ -10,7 +11,7 @@ classDiagram
   
   ERC2771Context --|> Context
   
-  %% 608:235:1
+  %% 624:235:1
   class Context {
     <<Contract>>
     ~_msgSender(): (address)

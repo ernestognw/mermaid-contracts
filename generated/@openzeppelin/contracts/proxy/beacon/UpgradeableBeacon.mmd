@@ -1,8 +1,8 @@
 classDiagram
-  %% 543:1496:2
+  %% 555:1663:2
   class UpgradeableBeacon {
     <<Contract>>
-    +constructor(address implementation_)
+    +constructor(address implementation_, address initialOwner)
     +implementation(): (address)
     +upgradeTo(address newImplementation)
     -_setImplementation(address newImplementation)
@@ -10,7 +10,7 @@ classDiagram
   
   UpgradeableBeacon --|> IBeacon
   
-  %% 198:251:1
+  %% 214:257:1
   class IBeacon {
     <<Interface>>
     #implementation(): (address)$
@@ -18,10 +18,10 @@ classDiagram
   
   UpgradeableBeacon --|> Ownable
   
-  %% 654:1968:0
+  %% 663:2438:0
   class Ownable {
     <<Contract>>
-    ~constructor()
+    ~constructor(address initialOwner)
     +owner(): (address)
     ~_checkOwner()
     +renounceOwnership()
@@ -31,7 +31,7 @@ classDiagram
   
   Ownable --|> Context
   
-  %% 608:235:4
+  %% 624:235:3
   class Context {
     <<Contract>>
     ~_msgSender(): (address)

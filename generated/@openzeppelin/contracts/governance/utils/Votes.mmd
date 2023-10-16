@@ -1,10 +1,12 @@
 classDiagram
-  %% 1670:6052:1
+  %% 1892:7747:1
   class Votes {
     <<Contract>>
+    +clock(): (uint48)
+    +CLOCK_MODE(): (string memory)
     +getVotes(address account): (uint256)
-    +getPastVotes(address account, uint256 blockNumber): (uint256)
-    +getPastTotalSupply(uint256 blockNumber): (uint256)
+    +getPastVotes(address account, uint256 timepoint): (uint256)
+    +getPastTotalSupply(uint256 timepoint): (uint256)
     ~_getTotalSupply(): (uint256)
     +delegates(address account): (address)
     +delegate(address delegatee)
@@ -12,30 +14,17 @@ classDiagram
     ~_delegate(address account, address delegatee)
     ~_transferVotingUnits(address from, address to, uint256 amount)
     -_moveDelegateVotes(address from, address to, uint256 amount)
-    -_add(uint256 a, uint256 b): (uint256)
-    -_subtract(uint256 a, uint256 b): (uint256)
-    ~_useNonce(address owner): (uint256 current)
-    +nonces(address owner): (uint256)
-    #DOMAIN_SEPARATOR(): (bytes32)
+    ~_numCheckpoints(address account): (uint32)
+    ~_checkpoints(address account, uint32 pos): (struct Checkpoints.Checkpoint208 memory)
+    -_push(struct Checkpoints.Trace208 storage store, function (uint208,uint208) view returns (uint208) op, uint208 delta): (uint208, uint208)
+    -_add(uint208 a, uint208 b): (uint208)
+    -_subtract(uint208 a, uint208 b): (uint208)
     ~_getVotingUnits(address): (uint256)$
-  }
-  
-  Votes --|> IVotes
-  
-  %% 268:1795:0
-  class IVotes {
-    <<Interface>>
-    #getVotes(address account): (uint256)$
-    #getPastVotes(address account, uint256 blockNumber): (uint256)$
-    #getPastTotalSupply(uint256 blockNumber): (uint256)$
-    #delegates(address account): (address)$
-    #delegate(address delegatee)$
-    #delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)$
   }
   
   Votes --|> Context
   
-  %% 608:235:3
+  %% 624:235:5
   class Context {
     <<Contract>>
     ~_msgSender(): (address)
@@ -44,12 +33,62 @@ classDiagram
   
   Votes --|> EIP712
   
-  %% 1304:3211:7
+  %% 1960:4650:11
   class EIP712 {
     <<Contract>>
     ~constructor(string memory name, string memory version)
     ~_domainSeparatorV4(): (bytes32)
-    -_buildDomainSeparator(bytes32 typeHash, bytes32 nameHash, bytes32 versionHash): (bytes32)
+    -_buildDomainSeparator(): (bytes32)
     ~_hashTypedDataV4(bytes32 structHash): (bytes32)
+    +eip712Domain(): (bytes1 fields, string memory name, string memory version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] memory extensions)
+    ~_EIP712Name(): (string memory)
+    ~_EIP712Version(): (string memory)
+  }
+  
+  EIP712 --|> IERC5267
+  
+  %% 133:605:2
+  class IERC5267 {
+    <<Interface>>
+    #eip712Domain(): (bytes1 fields, string memory name, string memory version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] memory extensions)$
+  }
+  
+  Votes --|> Nonces
+  
+  %% 209:1280:6
+  class Nonces {
+    <<Contract>>
+    +nonces(address owner): (uint256)
+    ~_useNonce(address owner): (uint256)
+    ~_useCheckedNonce(address owner, uint256 nonce)
+  }
+  
+  Votes --|> IERC5805
+  
+  %% 230:41:3
+  class IERC5805 {
+    <<Interface>>
+  }
+  
+  IERC5805 --|> IERC6372
+  
+  %% 133:385:4
+  class IERC6372 {
+    <<Interface>>
+    #clock(): (uint48)$
+    #CLOCK_MODE(): (string memory)$
+  }
+  
+  IERC5805 --|> IVotes
+  
+  %% 239:2082:0
+  class IVotes {
+    <<Interface>>
+    #getVotes(address account): (uint256)$
+    #getPastVotes(address account, uint256 timepoint): (uint256)$
+    #getPastTotalSupply(uint256 timepoint): (uint256)$
+    #delegates(address account): (address)$
+    #delegate(address delegatee)$
+    #delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)$
   }
   

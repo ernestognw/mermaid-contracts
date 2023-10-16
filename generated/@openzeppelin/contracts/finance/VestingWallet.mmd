@@ -1,12 +1,12 @@
 classDiagram
-  %% 856:4179:0
+  %% 1638:4032:1
   class VestingWallet {
     <<Contract>>
-    +constructor(address beneficiaryAddress, uint64 startTimestamp, uint64 durationSeconds)
+    +constructor(address beneficiary, uint64 startTimestamp, uint64 durationSeconds)
     #receive()
-    +beneficiary(): (address)
     +start(): (uint256)
     +duration(): (uint256)
+    +end(): (uint256)
     +released(): (uint256)
     +released(address token): (uint256)
     +releasable(): (uint256)
@@ -20,7 +20,29 @@ classDiagram
   
   VestingWallet --|> Context
   
-  %% 608:235:5
+  %% 624:235:6
+  class Context {
+    <<Contract>>
+    ~_msgSender(): (address)
+    ~_msgData(): (bytes calldata)
+  }
+  
+  VestingWallet --|> Ownable
+  
+  %% 663:2438:0
+  class Ownable {
+    <<Contract>>
+    ~constructor(address initialOwner)
+    +owner(): (address)
+    ~_checkOwner()
+    +renounceOwnership()
+    +transferOwnership(address newOwner)
+    ~_transferOwnership(address newOwner)
+  }
+  
+  Ownable --|> Context
+  
+  %% 624:235:6
   class Context {
     <<Contract>>
     ~_msgSender(): (address)

@@ -1,18 +1,18 @@
 classDiagram
-  %% 165:3600:0
+  %% 491:3378:0
   class IERC1363 {
     <<Interface>>
-    #transferAndCall(address to, uint256 value): (bool)$
-    #transferAndCall(address to, uint256 value, bytes memory data): (bool)$
-    #transferFromAndCall(address from, address to, uint256 value): (bool)$
-    #transferFromAndCall(address from, address to, uint256 value, bytes memory data): (bool)$
-    #approveAndCall(address spender, uint256 value): (bool)$
-    #approveAndCall(address spender, uint256 value, bytes memory data): (bool)$
+    #transferAndCall(address to, uint256 amount): (bool)$
+    #transferAndCall(address to, uint256 amount, bytes memory data): (bool)$
+    #transferFromAndCall(address from, address to, uint256 amount): (bool)$
+    #transferFromAndCall(address from, address to, uint256 amount, bytes memory data): (bool)$
+    #approveAndCall(address spender, uint256 amount): (bool)$
+    #approveAndCall(address spender, uint256 amount, bytes memory data): (bool)$
   }
   
   IERC1363 --|> IERC165
   
-  %% 405:447:4
+  %% 421:447:4
   class IERC165 {
     <<Interface>>
     #supportsInterface(bytes4 interfaceId): (bool)$
@@ -20,14 +20,14 @@ classDiagram
   
   IERC1363 --|> IERC20
   
-  %% 202:2564:3
+  %% 203:2575:3
   class IERC20 {
     <<Interface>>
     #totalSupply(): (uint256)$
     #balanceOf(address account): (uint256)$
-    #transfer(address to, uint256 amount): (bool)$
+    #transfer(address to, uint256 value): (bool)$
     #allowance(address owner, address spender): (uint256)$
-    #approve(address spender, uint256 amount): (bool)$
-    #transferFrom(address from, address to, uint256 amount): (bool)$
+    #approve(address spender, uint256 value): (bool)$
+    #transferFrom(address from, address to, uint256 value): (bool)$
   }
   

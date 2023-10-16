@@ -1,0 +1,127 @@
+classDiagram
+  %% 1697:13112:2
+  class AccessControlDefaultAdminRules {
+    <<Contract>>
+    ~constructor(uint48 initialDelay, address initialDefaultAdmin)
+    +supportsInterface(bytes4 interfaceId): (bool)
+    +owner(): (address)
+    +grantRole(bytes32 role, address account)
+    +revokeRole(bytes32 role, address account)
+    +renounceRole(bytes32 role, address account)
+    ~_grantRole(bytes32 role, address account): (bool)
+    ~_revokeRole(bytes32 role, address account): (bool)
+    ~_setRoleAdmin(bytes32 role, bytes32 adminRole)
+    +defaultAdmin(): (address)
+    +pendingDefaultAdmin(): (address newAdmin, uint48 schedule)
+    +defaultAdminDelay(): (uint48)
+    +pendingDefaultAdminDelay(): (uint48 newDelay, uint48 schedule)
+    +defaultAdminDelayIncreaseWait(): (uint48)
+    +beginDefaultAdminTransfer(address newAdmin)
+    ~_beginDefaultAdminTransfer(address newAdmin)
+    +cancelDefaultAdminTransfer()
+    ~_cancelDefaultAdminTransfer()
+    +acceptDefaultAdminTransfer()
+    ~_acceptDefaultAdminTransfer()
+    +changeDefaultAdminDelay(uint48 newDelay)
+    ~_changeDefaultAdminDelay(uint48 newDelay)
+    +rollbackDefaultAdminDelay()
+    ~_rollbackDefaultAdminDelay()
+    ~_delayChangeWait(uint48 newDelay): (uint48)
+    -_setPendingDefaultAdmin(address newAdmin, uint48 newSchedule)
+    -_setPendingDelay(uint48 newDelay, uint48 newSchedule)
+    -_isScheduleSet(uint48 schedule): (bool)
+    -_hasSchedulePassed(uint48 schedule): (bool)
+  }
+  
+  AccessControlDefaultAdminRules --|> IAccessControlDefaultAdminRules
+  
+  %% 325:7844:3
+  class IAccessControlDefaultAdminRules {
+    <<Interface>>
+    #defaultAdmin(): (address)$
+    #pendingDefaultAdmin(): (address newAdmin, uint48 acceptSchedule)$
+    #defaultAdminDelay(): (uint48)$
+    #pendingDefaultAdminDelay(): (uint48 newDelay, uint48 effectSchedule)$
+    #beginDefaultAdminTransfer(address newAdmin)$
+    #cancelDefaultAdminTransfer()$
+    #acceptDefaultAdminTransfer()$
+    #changeDefaultAdminDelay(uint48 newDelay)$
+    #rollbackDefaultAdminDelay()$
+    #defaultAdminDelayIncreaseWait(): (uint48)$
+  }
+  
+  IAccessControlDefaultAdminRules --|> IAccessControl
+  
+  %% 225:3033:1
+  class IAccessControl {
+    <<Interface>>
+    #hasRole(bytes32 role, address account): (bool)$
+    #getRoleAdmin(bytes32 role): (bytes32)$
+    #grantRole(bytes32 role, address account)$
+    #revokeRole(bytes32 role, address account)$
+    #renounceRole(bytes32 role, address callerConfirmation)$
+  }
+  
+  AccessControlDefaultAdminRules --|> IERC5313
+  
+  %% 298:135:4
+  class IERC5313 {
+    <<Interface>>
+    #owner(): (address)$
+  }
+  
+  AccessControlDefaultAdminRules --|> AccessControl
+  
+  %% 1953:5096:0
+  class AccessControl {
+    <<Contract>>
+    +supportsInterface(bytes4 interfaceId): (bool)
+    +hasRole(bytes32 role, address account): (bool)
+    ~_checkRole(bytes32 role)
+    ~_checkRole(bytes32 role, address account)
+    +getRoleAdmin(bytes32 role): (bytes32)
+    +grantRole(bytes32 role, address account)
+    +revokeRole(bytes32 role, address account)
+    +renounceRole(bytes32 role, address callerConfirmation)
+    ~_setRoleAdmin(bytes32 role, bytes32 adminRole)
+    ~_grantRole(bytes32 role, address account): (bool)
+    ~_revokeRole(bytes32 role, address account): (bool)
+  }
+  
+  AccessControl --|> Context
+  
+  %% 624:235:5
+  class Context {
+    <<Contract>>
+    ~_msgSender(): (address)
+    ~_msgData(): (bytes calldata)
+  }
+  
+  AccessControl --|> IAccessControl
+  
+  %% 225:3033:1
+  class IAccessControl {
+    <<Interface>>
+    #hasRole(bytes32 role, address account): (bool)$
+    #getRoleAdmin(bytes32 role): (bytes32)$
+    #grantRole(bytes32 role, address account)$
+    #revokeRole(bytes32 role, address account)$
+    #renounceRole(bytes32 role, address callerConfirmation)$
+  }
+  
+  AccessControl --|> ERC165
+  
+  %% 659:251:6
+  class ERC165 {
+    <<Contract>>
+    +supportsInterface(bytes4 interfaceId): (bool)
+  }
+  
+  ERC165 --|> IERC165
+  
+  %% 421:447:7
+  class IERC165 {
+    <<Interface>>
+    #supportsInterface(bytes4 interfaceId): (bool)$
+  }
+  

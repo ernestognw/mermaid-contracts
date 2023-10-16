@@ -1,0 +1,16 @@
+classDiagram
+  %% 207:37:0
+  class IERC2612 {
+    <<Interface>>
+  }
+  
+  IERC2612 --|> IERC20Permit
+  
+  %% 2113:1689:1
+  class IERC20Permit {
+    <<Interface>>
+    #permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)$
+    #nonces(address owner): (uint256)$
+    #DOMAIN_SEPARATOR(): (bytes32)$
+  }
+  

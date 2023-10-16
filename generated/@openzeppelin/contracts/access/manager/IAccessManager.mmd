@@ -1,0 +1,35 @@
+classDiagram
+  %% 246:15841:1
+  class IAccessManager {
+    <<Interface>>
+    #canCall(address caller, address target, bytes4 selector): (bool allowed, uint32 delay)$
+    #expiration(): (uint32)$
+    #minSetback(): (uint32)$
+    #isTargetClosed(address target): (bool)$
+    #getTargetFunctionRole(address target, bytes4 selector): (uint64)$
+    #getTargetAdminDelay(address target): (uint32)$
+    #getRoleAdmin(uint64 roleId): (uint64)$
+    #getRoleGuardian(uint64 roleId): (uint64)$
+    #getRoleGrantDelay(uint64 roleId): (uint32)$
+    #getAccess(uint64 roleId, address account): (uint48, uint32, uint32, uint48)$
+    #hasRole(uint64 roleId, address account): (bool, uint32)$
+    #labelRole(uint64 roleId, string calldata label)$
+    #grantRole(uint64 roleId, address account, uint32 executionDelay)$
+    #revokeRole(uint64 roleId, address account)$
+    #renounceRole(uint64 roleId, address callerConfirmation)$
+    #setRoleAdmin(uint64 roleId, uint64 admin)$
+    #setRoleGuardian(uint64 roleId, uint64 guardian)$
+    #setGrantDelay(uint64 roleId, uint32 newDelay)$
+    #setTargetFunctionRole(address target, bytes4[] calldata selectors, uint64 roleId)$
+    #setTargetAdminDelay(address target, uint32 newDelay)$
+    #setTargetClosed(address target, bool closed)$
+    #getSchedule(bytes32 id): (uint48)$
+    #getNonce(bytes32 id): (uint32)$
+    #schedule(address target, bytes calldata data, uint48 when): (bytes32, uint32)$
+    #execute(address target, bytes calldata data): (uint32)$
+    #cancel(address caller, address target, bytes calldata data): (uint32)$
+    #consumeScheduledOp(address caller, bytes calldata data)$
+    #hashOperation(address caller, address target, bytes calldata data): (bytes32)$
+    #updateAuthority(address target, address newAuthority)$
+  }
+  

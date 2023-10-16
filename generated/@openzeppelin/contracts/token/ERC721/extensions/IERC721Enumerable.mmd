@@ -1,5 +1,5 @@
 classDiagram
-  %% 317:706:1
+  %% 333:706:1
   class IERC721Enumerable {
     <<Interface>>
     #totalSupply(): (uint256)$
@@ -9,7 +9,7 @@ classDiagram
   
   IERC721Enumerable --|> IERC721
   
-  %% 250:4725:0
+  %% 266:4659:0
   class IERC721 {
     <<Interface>>
     #balanceOf(address owner): (uint256 balance)$
@@ -18,14 +18,14 @@ classDiagram
     #safeTransferFrom(address from, address to, uint256 tokenId)$
     #transferFrom(address from, address to, uint256 tokenId)$
     #approve(address to, uint256 tokenId)$
-    #setApprovalForAll(address operator, bool _approved)$
+    #setApprovalForAll(address operator, bool approved)$
     #getApproved(uint256 tokenId): (address operator)$
     #isApprovedForAll(address owner, address operator): (bool)$
   }
   
   IERC721 --|> IERC165
   
-  %% 405:447:2
+  %% 421:447:2
   class IERC165 {
     <<Interface>>
     #supportsInterface(bytes4 interfaceId): (bool)$

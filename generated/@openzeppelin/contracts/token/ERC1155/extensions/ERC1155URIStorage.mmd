@@ -1,5 +1,5 @@
 classDiagram
-  %% 365:1726:3
+  %% 366:1720:4
   class ERC1155URIStorage {
     <<Contract>>
     +uri(uint256 tokenId): (string memory)
@@ -9,36 +9,36 @@ classDiagram
   
   ERC1155URIStorage --|> ERC1155
   
-  %% 570:16689:0
+  %% 727:16204:1
   class ERC1155 {
     <<Contract>>
-    +constructor(string memory uri_)
+    ~constructor(string memory uri_)
     +supportsInterface(bytes4 interfaceId): (bool)
     +uri(uint256): (string memory)
     +balanceOf(address account, uint256 id): (uint256)
     +balanceOfBatch(address[] memory accounts, uint256[] memory ids): (uint256[] memory)
     +setApprovalForAll(address operator, bool approved)
     +isApprovedForAll(address account, address operator): (bool)
-    +safeTransferFrom(address from, address to, uint256 id, uint256 amount, bytes memory data)
-    +safeBatchTransferFrom(address from, address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
-    ~_safeTransferFrom(address from, address to, uint256 id, uint256 amount, bytes memory data)
-    ~_safeBatchTransferFrom(address from, address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
+    +safeTransferFrom(address from, address to, uint256 id, uint256 value, bytes memory data)
+    +safeBatchTransferFrom(address from, address to, uint256[] memory ids, uint256[] memory values, bytes memory data)
+    ~_update(address from, address to, uint256[] memory ids, uint256[] memory values)
+    ~_updateWithAcceptanceCheck(address from, address to, uint256[] memory ids, uint256[] memory values, bytes memory data)
+    ~_safeTransferFrom(address from, address to, uint256 id, uint256 value, bytes memory data)
+    ~_safeBatchTransferFrom(address from, address to, uint256[] memory ids, uint256[] memory values, bytes memory data)
     ~_setURI(string memory newuri)
-    ~_mint(address to, uint256 id, uint256 amount, bytes memory data)
-    ~_mintBatch(address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
-    ~_burn(address from, uint256 id, uint256 amount)
-    ~_burnBatch(address from, uint256[] memory ids, uint256[] memory amounts)
+    ~_mint(address to, uint256 id, uint256 value, bytes memory data)
+    ~_mintBatch(address to, uint256[] memory ids, uint256[] memory values, bytes memory data)
+    ~_burn(address from, uint256 id, uint256 value)
+    ~_burnBatch(address from, uint256[] memory ids, uint256[] memory values)
     ~_setApprovalForAll(address owner, address operator, bool approved)
-    ~_beforeTokenTransfer(address operator, address from, address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
-    ~_afterTokenTransfer(address operator, address from, address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
-    -_doSafeTransferAcceptanceCheck(address operator, address from, address to, uint256 id, uint256 amount, bytes memory data)
-    -_doSafeBatchTransferAcceptanceCheck(address operator, address from, address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
-    -_asSingletonArray(uint256 element): (uint256[] memory)
+    -_doSafeTransferAcceptanceCheck(address operator, address from, address to, uint256 id, uint256 value, bytes memory data)
+    -_doSafeBatchTransferAcceptanceCheck(address operator, address from, address to, uint256[] memory ids, uint256[] memory values, bytes memory data)
+    -_asSingletonArrays(uint256 element1, uint256 element2): (uint256[] memory array1, uint256[] memory array2)
   }
   
   ERC1155 --|> Context
   
-  %% 608:235:6
+  %% 624:235:7
   class Context {
     <<Contract>>
     ~_msgSender(): (address)
@@ -47,7 +47,7 @@ classDiagram
   
   ERC1155 --|> ERC165
   
-  %% 726:260:8
+  %% 659:251:10
   class ERC165 {
     <<Contract>>
     +supportsInterface(bytes4 interfaceId): (bool)
@@ -55,7 +55,7 @@ classDiagram
   
   ERC165 --|> IERC165
   
-  %% 405:447:9
+  %% 421:447:11
   class IERC165 {
     <<Interface>>
     #supportsInterface(bytes4 interfaceId): (bool)$
@@ -63,20 +63,20 @@ classDiagram
   
   ERC1155 --|> IERC1155
   
-  %% 350:3723:1
+  %% 336:4384:2
   class IERC1155 {
     <<Interface>>
     #balanceOf(address account, uint256 id): (uint256)$
     #balanceOfBatch(address[] calldata accounts, uint256[] calldata ids): (uint256[] memory)$
     #setApprovalForAll(address operator, bool approved)$
     #isApprovedForAll(address account, address operator): (bool)$
-    #safeTransferFrom(address from, address to, uint256 id, uint256 amount, bytes calldata data)$
-    #safeBatchTransferFrom(address from, address to, uint256[] calldata ids, uint256[] calldata amounts, bytes calldata data)$
+    #safeTransferFrom(address from, address to, uint256 id, uint256 value, bytes calldata data)$
+    #safeBatchTransferFrom(address from, address to, uint256[] calldata ids, uint256[] calldata values, bytes calldata data)$
   }
   
   IERC1155 --|> IERC165
   
-  %% 405:447:9
+  %% 421:447:11
   class IERC165 {
     <<Interface>>
     #supportsInterface(bytes4 interfaceId): (bool)$
@@ -84,7 +84,7 @@ classDiagram
   
   ERC1155 --|> IERC1155MetadataURI
   
-  %% 364:310:4
+  %% 366:310:5
   class IERC1155MetadataURI {
     <<Interface>>
     #uri(uint256 id): (string memory)$
@@ -92,22 +92,29 @@ classDiagram
   
   IERC1155MetadataURI --|> IERC1155
   
-  %% 350:3723:1
+  %% 336:4384:2
   class IERC1155 {
     <<Interface>>
     #balanceOf(address account, uint256 id): (uint256)$
     #balanceOfBatch(address[] calldata accounts, uint256[] calldata ids): (uint256[] memory)$
     #setApprovalForAll(address operator, bool approved)$
     #isApprovedForAll(address account, address operator): (bool)$
-    #safeTransferFrom(address from, address to, uint256 id, uint256 amount, bytes calldata data)$
-    #safeBatchTransferFrom(address from, address to, uint256[] calldata ids, uint256[] calldata amounts, bytes calldata data)$
+    #safeTransferFrom(address from, address to, uint256 id, uint256 value, bytes calldata data)$
+    #safeBatchTransferFrom(address from, address to, uint256[] calldata ids, uint256[] calldata values, bytes calldata data)$
   }
   
   IERC1155 --|> IERC165
   
-  %% 405:447:9
+  %% 421:447:11
   class IERC165 {
     <<Interface>>
     #supportsInterface(bytes4 interfaceId): (bool)$
+  }
+  
+  ERC1155 --|> IERC1155Errors
+  
+  %% 4424:2107:0
+  class IERC1155Errors {
+    <<Interface>>
   }
   

@@ -1,18 +1,19 @@
 classDiagram
-  %% 1030:13261:2
+  %% 1084:15205:2
   class TimelockController {
     <<Contract>>
     +constructor(uint256 minDelay, address[] memory proposers, address[] memory executors, address admin)
     #receive()
     +supportsInterface(bytes4 interfaceId): (bool)
-    +isOperation(bytes32 id): (bool registered)
-    +isOperationPending(bytes32 id): (bool pending)
-    +isOperationReady(bytes32 id): (bool ready)
-    +isOperationDone(bytes32 id): (bool done)
-    +getTimestamp(bytes32 id): (uint256 timestamp)
-    +getMinDelay(): (uint256 duration)
-    +hashOperation(address target, uint256 value, bytes calldata data, bytes32 predecessor, bytes32 salt): (bytes32 hash)
-    +hashOperationBatch(address[] calldata targets, uint256[] calldata values, bytes[] calldata payloads, bytes32 predecessor, bytes32 salt): (bytes32 hash)
+    +isOperation(bytes32 id): (bool)
+    +isOperationPending(bytes32 id): (bool)
+    +isOperationReady(bytes32 id): (bool)
+    +isOperationDone(bytes32 id): (bool)
+    +getTimestamp(bytes32 id): (uint256)
+    +getOperationState(bytes32 id): (enum TimelockController.OperationState)
+    +getMinDelay(): (uint256)
+    +hashOperation(address target, uint256 value, bytes calldata data, bytes32 predecessor, bytes32 salt): (bytes32)
+    +hashOperationBatch(address[] calldata targets, uint256[] calldata values, bytes[] calldata payloads, bytes32 predecessor, bytes32 salt): (bytes32)
     +schedule(address target, uint256 value, bytes calldata data, bytes32 predecessor, bytes32 salt, uint256 delay)
     +scheduleBatch(address[] calldata targets, uint256[] calldata values, bytes[] calldata payloads, bytes32 predecessor, bytes32 salt, uint256 delay)
     -_schedule(bytes32 id, uint256 delay)
@@ -23,14 +24,12 @@ classDiagram
     -_beforeCall(bytes32 id, bytes32 predecessor)
     -_afterCall(bytes32 id)
     #updateDelay(uint256 newDelay)
-    +onERC721Received(address, address, uint256, bytes memory): (bytes4)
-    +onERC1155Received(address, address, uint256, uint256, bytes memory): (bytes4)
-    +onERC1155BatchReceived(address, address, uint256[] memory, uint256[] memory, bytes memory): (bytes4)
+    ~_encodeStateBitmap(enum TimelockController.OperationState operationState): (bytes32)
   }
   
   TimelockController --|> AccessControl
   
-  %% 1806:6295:0
+  %% 1953:5096:0
   class AccessControl {
     <<Contract>>
     +supportsInterface(bytes4 interfaceId): (bool)
@@ -40,16 +39,15 @@ classDiagram
     +getRoleAdmin(bytes32 role): (bytes32)
     +grantRole(bytes32 role, address account)
     +revokeRole(bytes32 role, address account)
-    +renounceRole(bytes32 role, address account)
-    ~_setupRole(bytes32 role, address account)
+    +renounceRole(bytes32 role, address callerConfirmation)
     ~_setRoleAdmin(bytes32 role, bytes32 adminRole)
-    ~_grantRole(bytes32 role, address account)
-    ~_revokeRole(bytes32 role, address account)
+    ~_grantRole(bytes32 role, address account): (bool)
+    ~_revokeRole(bytes32 role, address account): (bool)
   }
   
   AccessControl --|> Context
   
-  %% 608:235:6
+  %% 624:235:8
   class Context {
     <<Contract>>
     ~_msgSender(): (address)
@@ -58,19 +56,19 @@ classDiagram
   
   AccessControl --|> IAccessControl
   
-  %% 209:2710:1
+  %% 225:3033:1
   class IAccessControl {
     <<Interface>>
     #hasRole(bytes32 role, address account): (bool)$
     #getRoleAdmin(bytes32 role): (bytes32)$
     #grantRole(bytes32 role, address account)$
     #revokeRole(bytes32 role, address account)$
-    #renounceRole(bytes32 role, address account)$
+    #renounceRole(bytes32 role, address callerConfirmation)$
   }
   
   AccessControl --|> ERC165
   
-  %% 726:260:8
+  %% 659:251:9
   class ERC165 {
     <<Contract>>
     +supportsInterface(bytes4 interfaceId): (bool)
@@ -78,23 +76,57 @@ classDiagram
   
   ERC165 --|> IERC165
   
-  %% 405:447:9
+  %% 421:447:10
   class IERC165 {
     <<Interface>>
     #supportsInterface(bytes4 interfaceId): (bool)$
   }
   
-  TimelockController --|> IERC721Receiver
+  TimelockController --|> ERC721Holder
   
-  %% 294:692:4
+  %% 441:353:6
+  class ERC721Holder {
+    <<Contract>>
+    +onERC721Received(address, address, uint256, bytes memory): (bytes4)
+  }
+  
+  ERC721Holder --|> IERC721Receiver
+  
+  %% 295:699:5
   class IERC721Receiver {
     <<Interface>>
     #onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data): (bytes4)$
   }
   
-  TimelockController --|> IERC1155Receiver
+  TimelockController --|> ERC1155Holder
   
-  %% 232:2269:3
+  %% 522:828:4
+  class ERC1155Holder {
+    <<Contract>>
+    +supportsInterface(bytes4 interfaceId): (bool)
+    +onERC1155Received(address, address, uint256, uint256, bytes memory): (bytes4)
+    +onERC1155BatchReceived(address, address, uint256[] memory, uint256[] memory, bytes memory): (bytes4)
+  }
+  
+  ERC1155Holder --|> ERC165
+  
+  %% 659:251:9
+  class ERC165 {
+    <<Contract>>
+    +supportsInterface(bytes4 interfaceId): (bool)
+  }
+  
+  ERC165 --|> IERC165
+  
+  %% 421:447:10
+  class IERC165 {
+    <<Interface>>
+    #supportsInterface(bytes4 interfaceId): (bool)$
+  }
+  
+  ERC1155Holder --|> IERC1155Receiver
+  
+  %% 327:2269:3
   class IERC1155Receiver {
     <<Interface>>
     #onERC1155Received(address operator, address from, uint256 id, uint256 value, bytes calldata data): (bytes4)$
@@ -103,7 +135,7 @@ classDiagram
   
   IERC1155Receiver --|> IERC165
   
-  %% 405:447:9
+  %% 421:447:10
   class IERC165 {
     <<Interface>>
     #supportsInterface(bytes4 interfaceId): (bool)$

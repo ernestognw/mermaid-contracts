@@ -1,0 +1,10 @@
+classDiagram
+  %% 886:2353:0
+  class ReentrancyGuard {
+    <<Contract>>
+    ~constructor()
+    -_nonReentrantBefore()
+    -_nonReentrantAfter()
+    ~_reentrancyGuardEntered(): (bool)
+  }
+  

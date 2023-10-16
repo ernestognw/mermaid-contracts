@@ -1,0 +1,128 @@
+classDiagram
+  %% 896:1874:4
+  class ERC20Permit {
+    <<Contract>>
+    ~constructor(string memory name)
+    +permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)
+    +nonces(address owner): (uint256)
+    #DOMAIN_SEPARATOR(): (bytes32)
+  }
+  
+  ERC20Permit --|> ERC20
+  
+  %% 1401:9741:2
+  class ERC20 {
+    <<Contract>>
+    ~constructor(string memory name_, string memory symbol_)
+    +name(): (string memory)
+    +symbol(): (string memory)
+    +decimals(): (uint8)
+    +totalSupply(): (uint256)
+    +balanceOf(address account): (uint256)
+    +transfer(address to, uint256 value): (bool)
+    +allowance(address owner, address spender): (uint256)
+    +approve(address spender, uint256 value): (bool)
+    +transferFrom(address from, address to, uint256 value): (bool)
+    ~_transfer(address from, address to, uint256 value)
+    ~_update(address from, address to, uint256 value)
+    ~_mint(address account, uint256 value)
+    ~_burn(address account, uint256 value)
+    ~_approve(address owner, address spender, uint256 value)
+    ~_approve(address owner, address spender, uint256 value, bool emitEvent)
+    ~_spendAllowance(address owner, address spender, uint256 value)
+  }
+  
+  ERC20 --|> Context
+  
+  %% 624:235:7
+  class Context {
+    <<Contract>>
+    ~_msgSender(): (address)
+    ~_msgData(): (bytes calldata)
+  }
+  
+  ERC20 --|> IERC20
+  
+  %% 203:2575:3
+  class IERC20 {
+    <<Interface>>
+    #totalSupply(): (uint256)$
+    #balanceOf(address account): (uint256)$
+    #transfer(address to, uint256 value): (bool)$
+    #allowance(address owner, address spender): (uint256)$
+    #approve(address spender, uint256 value): (bool)$
+    #transferFrom(address from, address to, uint256 value): (bool)$
+  }
+  
+  ERC20 --|> IERC20Metadata
+  
+  %% 277:405:5
+  class IERC20Metadata {
+    <<Interface>>
+    #name(): (string memory)$
+    #symbol(): (string memory)$
+    #decimals(): (uint8)$
+  }
+  
+  IERC20Metadata --|> IERC20
+  
+  %% 203:2575:3
+  class IERC20 {
+    <<Interface>>
+    #totalSupply(): (uint256)$
+    #balanceOf(address account): (uint256)$
+    #transfer(address to, uint256 value): (bool)$
+    #allowance(address owner, address spender): (uint256)$
+    #approve(address spender, uint256 value): (bool)$
+    #transferFrom(address from, address to, uint256 value): (bool)$
+  }
+  
+  ERC20 --|> IERC20Errors
+  
+  %% 278:1764:1
+  class IERC20Errors {
+    <<Interface>>
+  }
+  
+  ERC20Permit --|> IERC20Permit
+  
+  %% 2113:1689:6
+  class IERC20Permit {
+    <<Interface>>
+    #permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)$
+    #nonces(address owner): (uint256)$
+    #DOMAIN_SEPARATOR(): (bytes32)$
+  }
+  
+  ERC20Permit --|> EIP712
+  
+  %% 1960:4650:13
+  class EIP712 {
+    <<Contract>>
+    ~constructor(string memory name, string memory version)
+    ~_domainSeparatorV4(): (bytes32)
+    -_buildDomainSeparator(): (bytes32)
+    ~_hashTypedDataV4(bytes32 structHash): (bytes32)
+    +eip712Domain(): (bytes1 fields, string memory name, string memory version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] memory extensions)
+    ~_EIP712Name(): (string memory)
+    ~_EIP712Version(): (string memory)
+  }
+  
+  EIP712 --|> IERC5267
+  
+  %% 133:605:0
+  class IERC5267 {
+    <<Interface>>
+    #eip712Domain(): (bytes1 fields, string memory name, string memory version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] memory extensions)$
+  }
+  
+  ERC20Permit --|> Nonces
+  
+  %% 209:1280:8
+  class Nonces {
+    <<Contract>>
+    +nonces(address owner): (uint256)
+    ~_useNonce(address owner): (uint256)
+    ~_useCheckedNonce(address owner, uint256 nonce)
+  }
+  

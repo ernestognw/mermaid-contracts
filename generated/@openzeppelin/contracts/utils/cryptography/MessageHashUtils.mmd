@@ -1,0 +1,10 @@
+classDiagram
+  %% 521:3235:1
+  class MessageHashUtils {
+    <<Library>>
+    ~toEthSignedMessageHash(bytes32 messageHash): (bytes32 digest)
+    ~toEthSignedMessageHash(bytes memory message): (bytes32)
+    ~toDataWithIntendedValidatorHash(address validator, bytes memory data): (bytes32)
+    ~toTypedDataHash(bytes32 domainSeparator, bytes32 structHash): (bytes32 digest)
+  }
+  

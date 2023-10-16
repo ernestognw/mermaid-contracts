@@ -1,5 +1,5 @@
 classDiagram
-  %% 1621:15801:0
+  %% 1651:17249:0
   class EnumerableMap {
     <<Library>>
     ~set(struct EnumerableMap.Bytes32ToBytes32Map storage map, bytes32 key, bytes32 value): (bool)
@@ -9,7 +9,7 @@ classDiagram
     ~at(struct EnumerableMap.Bytes32ToBytes32Map storage map, uint256 index): (bytes32, bytes32)
     ~tryGet(struct EnumerableMap.Bytes32ToBytes32Map storage map, bytes32 key): (bool, bytes32)
     ~get(struct EnumerableMap.Bytes32ToBytes32Map storage map, bytes32 key): (bytes32)
-    ~get(struct EnumerableMap.Bytes32ToBytes32Map storage map, bytes32 key, string memory errorMessage): (bytes32)
+    ~keys(struct EnumerableMap.Bytes32ToBytes32Map storage map): (bytes32[] memory)
     ~set(struct EnumerableMap.UintToUintMap storage map, uint256 key, uint256 value): (bool)
     ~remove(struct EnumerableMap.UintToUintMap storage map, uint256 key): (bool)
     ~contains(struct EnumerableMap.UintToUintMap storage map, uint256 key): (bool)
@@ -17,7 +17,7 @@ classDiagram
     ~at(struct EnumerableMap.UintToUintMap storage map, uint256 index): (uint256, uint256)
     ~tryGet(struct EnumerableMap.UintToUintMap storage map, uint256 key): (bool, uint256)
     ~get(struct EnumerableMap.UintToUintMap storage map, uint256 key): (uint256)
-    ~get(struct EnumerableMap.UintToUintMap storage map, uint256 key, string memory errorMessage): (uint256)
+    ~keys(struct EnumerableMap.UintToUintMap storage map): (uint256[] memory)
     ~set(struct EnumerableMap.UintToAddressMap storage map, uint256 key, address value): (bool)
     ~remove(struct EnumerableMap.UintToAddressMap storage map, uint256 key): (bool)
     ~contains(struct EnumerableMap.UintToAddressMap storage map, uint256 key): (bool)
@@ -25,7 +25,7 @@ classDiagram
     ~at(struct EnumerableMap.UintToAddressMap storage map, uint256 index): (uint256, address)
     ~tryGet(struct EnumerableMap.UintToAddressMap storage map, uint256 key): (bool, address)
     ~get(struct EnumerableMap.UintToAddressMap storage map, uint256 key): (address)
-    ~get(struct EnumerableMap.UintToAddressMap storage map, uint256 key, string memory errorMessage): (address)
+    ~keys(struct EnumerableMap.UintToAddressMap storage map): (uint256[] memory)
     ~set(struct EnumerableMap.AddressToUintMap storage map, address key, uint256 value): (bool)
     ~remove(struct EnumerableMap.AddressToUintMap storage map, address key): (bool)
     ~contains(struct EnumerableMap.AddressToUintMap storage map, address key): (bool)
@@ -33,7 +33,7 @@ classDiagram
     ~at(struct EnumerableMap.AddressToUintMap storage map, uint256 index): (address, uint256)
     ~tryGet(struct EnumerableMap.AddressToUintMap storage map, address key): (bool, uint256)
     ~get(struct EnumerableMap.AddressToUintMap storage map, address key): (uint256)
-    ~get(struct EnumerableMap.AddressToUintMap storage map, address key, string memory errorMessage): (uint256)
+    ~keys(struct EnumerableMap.AddressToUintMap storage map): (address[] memory)
     ~set(struct EnumerableMap.Bytes32ToUintMap storage map, bytes32 key, uint256 value): (bool)
     ~remove(struct EnumerableMap.Bytes32ToUintMap storage map, bytes32 key): (bool)
     ~contains(struct EnumerableMap.Bytes32ToUintMap storage map, bytes32 key): (bool)
@@ -41,6 +41,6 @@ classDiagram
     ~at(struct EnumerableMap.Bytes32ToUintMap storage map, uint256 index): (bytes32, uint256)
     ~tryGet(struct EnumerableMap.Bytes32ToUintMap storage map, bytes32 key): (bool, uint256)
     ~get(struct EnumerableMap.Bytes32ToUintMap storage map, bytes32 key): (uint256)
-    ~get(struct EnumerableMap.Bytes32ToUintMap storage map, bytes32 key, string memory errorMessage): (uint256)
+    ~keys(struct EnumerableMap.Bytes32ToUintMap storage map): (bytes32[] memory)
   }
   
